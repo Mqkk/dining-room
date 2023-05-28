@@ -1,0 +1,26 @@
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 145%;
+    color: $dark-color;
+  }
+
+  &__value {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 145%;
+    font-feature-settings: "pnum" on, "lnum" on;
+    color: $dark-color;
+  }
+
+  &__btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
