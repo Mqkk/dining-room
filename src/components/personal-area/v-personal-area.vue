@@ -5,7 +5,17 @@
         <div class="personal-area__name">Иванов Иван Иванович</div>
         <div class="personal-area__number">203848504058</div>
         <div class="personal-area__img">
-          <img :src="code" alt="" />
+          <vue-barcode
+            :code="barcodeData"
+            :value="barcodeData"
+            :options="{
+              background: '#f6f6f6',
+              fontSize: '14px',
+              displayValue: 'false',
+              width: '2',
+              format: 'ITF14',
+            }"
+          />
         </div>
       </div>
       <div class="personal-nav">
@@ -28,16 +38,18 @@
 <script>
 import code from "@/assets/images/code.png";
 import arrowRight from "@/assets/images/icons/icon-arrow-right.svg";
-
 import { mapActions } from "vuex";
+
 export default {
   name: "v-personal-area",
   data() {
     return {
       code,
       arrowRight,
+      barcodeData: "5901234123457",
     };
   },
+  components: {},
   methods: {
     ...mapActions(["LOGOUT"]),
     logout() {
@@ -77,6 +89,7 @@ export default {
   }
 
   &__img {
+    position: relative;
     width: 100%;
     height: auto;
     max-height: 500px;

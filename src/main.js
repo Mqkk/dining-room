@@ -4,9 +4,11 @@ import store from "./vuex/store.js";
 import router from "./router/router.js";
 import "material-design-icons-iconfont";
 import VueTheMask from "vue-the-mask";
+import VueBarcode from "@chenfengyuan/vue-barcode";
 
 const app = createApp(App);
 app.use(VueTheMask).use(store).use(router);
+app.component(VueBarcode.name, VueBarcode);
 
 const isAuthenticated = store.state.isAuthenticated;
 
