@@ -5,30 +5,45 @@
     </div>
     <div class="change-password__content content">
       <form class="form change-password__form">
-        <label class="form__label">
-          <input
-            type="text"
-            class="input-reset input form__input"
-            v-model="formData.password"
-            placeholder="Введите старый пароль"
-          />
-        </label>
-        <label class="form__label">
-          <input
-            type="text"
-            class="input-reset input form__input"
-            v-model="formData.password_new"
-            placeholder="Введите новый пароль"
-          />
-        </label>
-        <label class="form__label">
-          <input
-            type="text"
-            class="input-reset input form__input"
-            v-model="formData.confirmNewPassword"
-            placeholder="Подтвердите новый пароль"
-          />
-        </label>
+        <div class="form__item form__item--left">
+          <label class="form__label">
+            <input
+              type="text"
+              class="input-reset input form__input"
+              v-model="formData.password"
+              placeholder="Введите старый пароль"
+            />
+          </label>
+          <span class="error-message" v-if="errors.password">
+            {{ errors.password }}
+          </span>
+        </div>
+        <div class="form__item form__item--left">
+          <label class="form__label">
+            <input
+              type="text"
+              class="input-reset input form__input"
+              v-model="formData.password_new"
+              placeholder="Введите новый пароль"
+            />
+          </label>
+          <span class="error-message" v-if="errors.password_new">
+            {{ errors.password_new }}
+          </span>
+        </div>
+        <div class="form__item form__item--left">
+          <label class="form__label">
+            <input
+              type="text"
+              class="input-reset input form__input"
+              v-model="formData.confirmNewPassword"
+              placeholder="Подтвердите новый пароль"
+            />
+          </label>
+          <span class="error-message" v-if="errors.confirmNewPassword">
+            {{ errors.confirmNewPassword }}
+          </span>
+        </div>
         <button class="btn-reset btn form__btn" @click="submitChangePassword">
           Сменить пароль
         </button>
@@ -52,6 +67,11 @@ export default {
       formData: {
         password: "",
         password_new: "",
+      },
+      errors: {
+        password: "",
+        password_new: "",
+        confirmNewPassword: "",
       },
     };
   },

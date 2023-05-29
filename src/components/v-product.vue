@@ -19,7 +19,7 @@
             <div class="product__price">{{ product.price }} ₽</div>
           </div>
         </div>
-        <div class="product__description">{{ product.good_id }}</div>
+        <div class="product__description">{{ product.good__description }}</div>
       </div>
     </div>
   </div>

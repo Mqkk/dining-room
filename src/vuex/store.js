@@ -21,6 +21,7 @@ const store = createStore({
     order: [],
     changePasswordData: {},
     isAuthenticated: false,
+    phoneForRecoveryPassword: "", // строка для номера телефона при восстановлении пароля
   },
   mutations,
   actions,

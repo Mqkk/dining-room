@@ -48,8 +48,8 @@
             type="tel"
             id="phone"
             v-model="formData.phone"
-            v-inputmask="{ mask: '+7 (999) 999-99-99' }"
-            placeholder="Введите Телефон"
+            placeholder="Введите номер телефона"
+            v-mask="'+7(###)-###-##-##'"
           />
           <span class="error-message" v-if="errors.phone">{{
             errors.phone
@@ -187,8 +187,8 @@ export default {
       this.$router.push("/confirmation");
     },
     isValidPhoneNumber(phone) {
-      const phoneRegex = /^[0-9]{11}$/;
-      return phoneRegex.test(phone);
+      // const phoneRegex = /^[0-9]{11}$/;
+      return phone;
     },
   },
 };

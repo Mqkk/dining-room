@@ -12,7 +12,7 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       });
-      commit("SET_PRODUCTS_TO_STATE", products.data);
+      commit("SET_PRODUCTS_TO_STATE", products.data.items);
       return products;
     } catch (error) {
       console.log(error);

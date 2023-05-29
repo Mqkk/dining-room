@@ -13,21 +13,25 @@
             id="phone"
             v-model="formData.phone"
             placeholder="Введите номер телефона"
-            :maxlength="11"
-            @input="formatPhoneNumber"
+            v-mask="'+7(###)-###-##-##'"
           />
-          <div v-if="phoneInvalid" class="error-message">
-            Неправильный формат номера телефона
-          </div>
+          <span class="error-message" v-if="errors.phone">{{
+            errors.phone
+          }}</span>
         </div>
         <div class="form__item">
-          <input
-            class="input-reset input"
-            type="password"
-            id="name"
-            v-model="formData.password"
-            placeholder="Введите пароль"
-          />
+          <div class="form__item form__item--left">
+            <input
+              class="input-reset input"
+              type="password"
+              id="password"
+              v-model="formData.password"
+              placeholder="Введите Пароль"
+            />
+            <span class="error-message" v-if="errors.password">{{
+              errors.password
+            }}</span>
+          </div>
           <router-link class="link form__link" to="/recovery-password">
             Забыли пароль?
           </router-link>
@@ -56,6 +60,10 @@ export default {
       },
       phoneInvalid: false,
       maskedValue: "",
+      errors: {
+        phone: "",
+        password: "",
+      },
     };
   },
   methods: {
@@ -63,25 +71,44 @@ export default {
     async sendingData(event) {
       event.preventDefault();
 
-      // Проверка номера телефона перед отправкой
-      if (!this.isValidPhoneNumber(this.formData.phone)) {
-        this.phoneInvalid = true; // Устанавливаем флаг ошибки номера телефона
-        return;
+      // Сбросьте предыдущие ошибки перед каждой валидацией
+      this.errors = {
+        phone: "",
+        password: "",
+      };
+
+      // Валидация Телефона
+      if (!this.formData.phone) {
+        this.errors.phone = "Поле обязательно для заполнения";
+      } else if (!this.isValidPhoneNumber(this.formData.phone)) {
+        this.errors.phone = "Некорректный номер телефона";
       }
 
-      await this.POST_DATA_FOR_AUTHORIZATION(this.formData); // вызываем действие для отправки формы
-      this.reloadPage();
+      // Валидация Пароля
+      if (!this.formData.password) {
+        this.errors.password = "Поле обязательно для заполнения";
+      }
+
+      // Если есть ошибки валидации, не отправляем данные
+      const hasErrors = Object.values(this.errors).some(
+        (error) => error !== ""
+      );
+      if (hasErrors) {
+        return;
+      } else {
+        await this.POST_DATA_FOR_AUTHORIZATION(this.formData); // вызываем действие для отправки формы
+
+        this.reloadPage();
+      }
+
       // this.$router.push("/catalog");
     },
+
     isValidPhoneNumber(phone) {
-      // Проверка формата номера телефона
-      const phoneRegex = /^[0-9]{11}$/;
-      return phoneRegex.test(phone);
+      // const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+      return phone;
     },
-    formatPhoneNumber() {
-      // Форматирование номера телефона (удаление лишних символов)
-      this.formData.phone = this.formData.phone.replace(/\D/g, "");
-    },
+
     reloadPage() {
       window.location.reload();
     },

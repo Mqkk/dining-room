@@ -108,4 +108,22 @@ export default {
       return error;
     }
   },
+
+  async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, phoneForRecoveryPassword) {
+    try {
+      const response = await axios.post(
+        "http://brn-k30-047:8000/api/login/",
+        phoneForRecoveryPassword,
+        {
+          headers: {},
+        }
+      );
+      commit("UPDATE_PHONE_FOR_RECOVERY_PASSWORD", phoneForRecoveryPassword);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 };

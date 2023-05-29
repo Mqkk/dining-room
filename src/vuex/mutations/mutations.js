@@ -31,6 +31,11 @@ export default {
     state.isAuthenticated = isAuthenticated;
   },
 
+  // recovery password
+  UPDATE_PHONE_FOR_RECOVERY_PASSWORD(state, payload) {
+    state.phoneForRecoveryPassword = payload;
+  },
+
   // мутация, которая добавляет данные из API в массив
   SET_PRODUCTS_TO_STATE: (state, products) => {
     state.products = products;
