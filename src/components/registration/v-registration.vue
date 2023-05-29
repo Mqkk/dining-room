@@ -3,48 +3,85 @@
     <div class="registration__container">
       <v-title-subtitle :title="title" :subtitle="subtitle" />
       <form class="form content" @submit.prevent="sendingData">
-        <input
-          class="input-reset input"
-          type="text"
-          id="last_name"
-          v-model="formData.last_name"
-          placeholder="Введите Фамилию"
-        />
-        <input
-          class="input-reset input"
-          type="text"
-          id="name"
-          v-model="formData.name"
-          placeholder="Введите Имя"
-        />
-        <input
-          class="input-reset input"
-          type="text"
-          id="surname"
-          v-model="formData.surname"
-          placeholder="Введите Отчество"
-        />
-        <input
-          class="input-reset input"
-          type="tel"
-          id="phone"
-          v-model="formData.phone"
-          placeholder="Введите Телефон"
-        />
-        <input
-          class="input-reset input"
-          type="password"
-          id="password"
-          v-model="formData.password"
-          placeholder="Введите Пароль"
-        />
-        <input
-          class="input-reset input"
-          type="password"
-          id="password2"
-          v-model="formData.password2"
-          placeholder="Повторите Пароль"
-        />
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="text"
+            id="last_name"
+            v-model="formData.last_name"
+            placeholder="Введите Фамилию"
+          />
+          <span class="error-message" v-if="errors.lastName">{{
+            errors.lastName
+          }}</span>
+        </div>
+
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="text"
+            id="name"
+            v-model="formData.name"
+            placeholder="Введите Имя"
+          />
+          <span class="error-message" v-if="errors.name">{{
+            errors.name
+          }}</span>
+        </div>
+
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="text"
+            id="surname"
+            v-model="formData.surname"
+            placeholder="Введите Отчество"
+          />
+          <span class="error-message" v-if="errors.surname">{{
+            errors.surname
+          }}</span>
+        </div>
+
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="tel"
+            id="phone"
+            v-model="formData.phone"
+            v-inputmask="{ mask: '+7 (999) 999-99-99' }"
+            placeholder="Введите Телефон"
+          />
+          <span class="error-message" v-if="errors.phone">{{
+            errors.phone
+          }}</span>
+        </div>
+
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="password"
+            id="password"
+            v-model="formData.password"
+            placeholder="Введите Пароль"
+          />
+          <span class="error-message" v-if="errors.password">{{
+            errors.password
+          }}</span>
+        </div>
+
+        <div class="form__item form__item--left">
+          <input
+            class="input-reset input"
+            type="password"
+            id="password2"
+            v-model="formData.password2"
+            placeholder="Повторите Пароль"
+          />
+          <span class="error-message" v-if="errors.password2">{{
+            errors.password2
+          }}</span>
+        </div>
+
         <button class="btn-reset btn form__btn" type="submit">
           Продолжить
         </button>
@@ -71,6 +108,14 @@ export default {
         password: "",
         password2: "",
       },
+      errors: {
+        lastName: "",
+        name: "",
+        surname: "",
+        phone: "",
+        password: "",
+        password2: "",
+      },
     };
   },
   components: {
@@ -83,12 +128,76 @@ export default {
     ...mapActions(["POST_DATA_FOR_REGISTRATION", "SAVE_TOKEN"]),
     async sendingData(event) {
       event.preventDefault();
-      await this.POST_DATA_FOR_REGISTRATION(this.formData); // вызываем действие для отправки формы
+
+      // Сбросьте предыдущие ошибки перед каждой валидацией
+      this.errors = {
+        lastName: "",
+        name: "",
+        surname: "",
+        phone: "",
+        password: "",
+        password2: "",
+      };
+
+      // Валидация Фамилии
+      if (!this.formData.last_name) {
+        this.errors.lastName = "Поле Фамилия обязательно для заполнения";
+      }
+
+      // Валидация Имени
+      if (!this.formData.name) {
+        this.errors.name = "Поле Имя обязательно для заполнения";
+      }
+
+      // Валидация Отчества
+      if (!this.formData.surname) {
+        this.errors.surname = "Поле Отчество обязательно для заполнения";
+      }
+
+      // Валидация Телефона
+      if (!this.formData.phone) {
+        this.errors.phone = "Поле Телефон обязательно для заполнения";
+      } else if (!this.isValidPhoneNumber(this.formData.phone)) {
+        this.errors.phone = "Некорректный номер телефона";
+      }
+
+      // Валидация Пароля
+      if (!this.formData.password) {
+        this.errors.password = "Поле Пароль обязательно для заполнения";
+      }
+
+      // Валидация Повторного пароля
+      if (!this.formData.password2) {
+        this.errors.password2 =
+          "Поле Повторите Пароль обязательно для заполнения";
+      } else if (this.formData.password !== this.formData.password2) {
+        this.errors.password2 = "Пароли не совпадают";
+      }
+
+      // Если есть ошибки валидации, не отправляем данные
+      const hasErrors = Object.values(this.errors).some(
+        (error) => error !== ""
+      );
+      if (hasErrors) {
+        return;
+      }
+
+      await this.POST_DATA_FOR_REGISTRATION(this.formData);
 
       this.$router.push("/confirmation");
+    },
+    isValidPhoneNumber(phone) {
+      const phoneRegex = /^[0-9]{11}$/;
+      return phoneRegex.test(phone);
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.error-message {
+  color: red;
+  font-size: 12px;
+  text-align: left;
+}
+</style>

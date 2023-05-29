@@ -55,6 +55,7 @@ export default {
         password: "",
       },
       phoneInvalid: false,
+      maskedValue: "",
     };
   },
   methods: {

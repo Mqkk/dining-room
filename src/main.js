@@ -5,7 +5,6 @@ import router from "./router/router.js";
 import "material-design-icons-iconfont";
 
 const app = createApp(App);
-
 app.use(store).use(router);
 
 const isAuthenticated = store.state.isAuthenticated;
