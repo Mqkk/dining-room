@@ -9,13 +9,13 @@
           <input
             type="tel"
             class="input-reset input form__input"
-            v-model="phoneNumber"
+            v-model="recoveryPasswordData.phone"
             v-mask="'+7(###)-###-##-##'"
             placeholder="Введите номер телефона"
           />
         </label>
-        <span class="error-message" v-if="errors.phoneNumber">{{
-          errors.phoneNumber
+        <span class="error-message" v-if="errors.phone">{{
+          errors.phone
         }}</span>
       </div>
       <button class="btn-reset btn form__btn" @click="submitPhoneNumber">
@@ -39,9 +39,11 @@ export default {
       title: "Восстановление пароля",
       subtitle:
         "Введите ваш номер телефона. На него будет оправлен код для восстановления пароля.",
-      phoneNumber: "",
+      recoveryPasswordData: {
+        phone: "",
+      },
       errors: {
-        phoneNumber: "",
+        phone: "",
       },
     };
   },
@@ -51,14 +53,14 @@ export default {
       event.preventDefault();
 
       this.errors = {
-        phoneNumber: "",
+        phone: "",
       };
 
       // Валидация Телефона
-      if (!this.phoneNumber) {
-        this.errors.phoneNumber = "Поле обязательно для заполнения";
-      } else if (!this.isValidPhoneNumber(this.phoneNumber)) {
-        this.errors.phoneNumber = "Некорректный номер телефона";
+      if (!this.recoveryPasswordData.phone) {
+        this.errors.phone = "Поле обязательно для заполнения";
+      } else if (!this.isValidPhoneNumber(this.recoveryPasswordData.phone)) {
+        this.errors.phone = "Некорректный номер телефона";
       }
 
       // Если есть ошибки валидации, не отправляем данные
@@ -69,15 +71,15 @@ export default {
         return;
       }
 
-      this.POST_PHONE_FOR_RECOVERY_PASSWORD(this.phoneNumber);
+      this.POST_PHONE_FOR_RECOVERY_PASSWORD(this.recoveryPasswordData);
 
       // переход к следущему этапу
       this.$router.push("/verification-code");
     },
 
-    isValidPhoneNumber(phoneNumber) {
-      const phoneRegex = /^[0-9]{11}$/;
-      return phoneRegex.test(phoneNumber);
+    isValidPhoneNumber(phone) {
+      const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+      return phoneRegex.test(phone);
     },
   },
 };

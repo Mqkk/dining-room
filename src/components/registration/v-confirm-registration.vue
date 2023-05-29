@@ -6,7 +6,7 @@
         <input
           class="input-reset input"
           type="number"
-          v-model="confirmCode"
+          v-model="confirmCode.code"
           placeholder="Введите код подтверждения"
         />
         <button
@@ -32,7 +32,10 @@ export default {
     return {
       title: "Подтверждение",
       subtitle: "На ваш телефон был отправлен код для подтверждения.",
-      confirmCode: "",
+      confirmCode: {
+        code: "",
+        phone: this.$store.state.registrationData.phone,
+      },
     };
   },
   components: {
@@ -43,7 +46,6 @@ export default {
     async sendingCode(event) {
       event.preventDefault();
       await this.POST_DATA_FOR_CONFIRM_REGISTRATION(this.confirmCode); // действие для отправки формы
-
       this.$router.push("/authorization");
     },
   },

@@ -6,8 +6,7 @@
           <img :src="timer" alt="Ожидание" />
         </div>
         <h3 class="restricted__title">
-          Прием заявок ограничен <br />
-          с <span>11:00</span> по <span>08:10</span>
+          {{ this.PRODUCTS[0] }}
         </h3>
       </div>
     </div>
@@ -16,6 +15,7 @@
 
 <script>
 import timer from "@/assets/images/timer.svg";
+import { mapGetters } from "vuex";
 
 export default {
   name: "v-restricted",
@@ -23,6 +23,9 @@ export default {
     return {
       timer,
     };
+  },
+  computed: {
+    ...mapGetters(["PRODUCTS"]),
   },
 };
 </script>

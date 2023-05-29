@@ -14,14 +14,14 @@ const store = createStore({
   state: {
     registrationData: {}, // состояние для хранения данных регистрации
     loginData: {}, // состояние для хранения данных авторизации
-    confirmCode: "", // состояние для хранения данных подтверждения регистрации
+    confirmCode: {}, // состояние для хранения данных подтверждения регистрации
     token: "", // состояние для хранения токен JWT
     products: [], // пустой массив, куда пойдут данные из API
     cart: [],
     order: [],
     changePasswordData: {},
     isAuthenticated: false,
-    phoneForRecoveryPassword: "", // строка для номера телефона при восстановлении пароля
+    recoveryPasswordData: {}, // строка для номера телефона при восстановлении пароля
   },
   mutations,
   actions,

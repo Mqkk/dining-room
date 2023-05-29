@@ -13,7 +13,7 @@
             id="phone"
             v-model="formData.phone"
             placeholder="Введите номер телефона"
-            v-mask="'+7(###)-###-##-##'"
+            v-mask="'+7 (###) ###-##-##'"
           />
           <span class="error-message" v-if="errors.phone">{{
             errors.phone
@@ -105,8 +105,8 @@ export default {
     },
 
     isValidPhoneNumber(phone) {
-      // const phoneRegex = /^\+?[1-9]\d{1,14}$/;
-      return phone;
+      const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+      return phoneRegex.test(phone);
     },
 
     reloadPage() {

@@ -164,6 +164,8 @@ export default {
       // Валидация Пароля
       if (!this.formData.password) {
         this.errors.password = "Поле Пароль обязательно для заполнения";
+      } else if (this.formData.password.length < 7) {
+        this.errors.password = "Пароль должен сожержать минимум 8 символов";
       }
 
       // Валидация Повторного пароля
@@ -187,8 +189,8 @@ export default {
       this.$router.push("/confirmation");
     },
     isValidPhoneNumber(phone) {
-      // const phoneRegex = /^[0-9]{11}$/;
-      return phone;
+      const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+      return phoneRegex.test(phone);
     },
   },
 };

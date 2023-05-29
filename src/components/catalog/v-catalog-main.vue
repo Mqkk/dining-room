@@ -1,20 +1,25 @@
 <template>
   <div class="catalog-main content">
-    <div v-for="(good__category__name, index) in categories" :key="index">
-      <h2 class="catalog-main__title">{{ good__category__name }}</h2>
-      <ul class="list-reset catalog-main__list">
-        <v-catalog-item
-          v-for="(product, productIndex) in filteredProducts(
-            good__category__name
-          )"
-          :key="productIndex"
-          :product_data="product"
-          @addToCart="addToCart"
-          @addToOrder="addToOrder"
-          @incrementItem="incrementItem(product)"
-          @decrementItem="decrementItem(product)"
-        />
-      </ul>
+    <div v-if="PRODUCTS.length > 1">
+      <div v-for="(good__category__name, index) in categories" :key="index">
+        <h2 class="catalog-main__title">{{ good__category__name }}</h2>
+        <ul class="list-reset catalog-main__list">
+          <v-catalog-item
+            v-for="(product, productIndex) in filteredProducts(
+              good__category__name
+            )"
+            :key="productIndex"
+            :product_data="product"
+            @addToCart="addToCart"
+            @addToOrder="addToOrder"
+            @incrementItem="incrementItem(product)"
+            @decrementItem="decrementItem(product)"
+          />
+        </ul>
+      </div>
+    </div>
+    <div v-if="PRODUCTS.length === 1">
+      <v-restricted />
     </div>
   </div>
 </template>
@@ -22,11 +27,13 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import vCatalogItem from "@/components/catalog/v-catalog-item";
+import vRestricted from "../v-restricted.vue";
 
 export default {
   name: "v-catalog-main",
   components: {
     vCatalogItem,
+    vRestricted,
   },
   methods: {
     ...mapActions([

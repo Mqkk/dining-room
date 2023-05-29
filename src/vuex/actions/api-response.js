@@ -109,16 +109,16 @@ export default {
     }
   },
 
-  async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, phoneForRecoveryPassword) {
+  async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/login/",
-        phoneForRecoveryPassword,
+        "http://brn-k30-047:8000/api/password/recovery/",
+        recoveryPasswordData,
         {
           headers: {},
         }
       );
-      commit("UPDATE_PHONE_FOR_RECOVERY_PASSWORD", phoneForRecoveryPassword);
+      commit("UPDATE_PHONE_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
       console.log(response);
     } catch (error) {
