@@ -42,4 +42,8 @@ export default {
       (product) => product.good_id.toString() === stringId
     );
   },
+
+  PROFILE(state) {
+    return state.profileData;
+  },
 };

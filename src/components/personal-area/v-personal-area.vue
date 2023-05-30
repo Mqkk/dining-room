@@ -2,12 +2,14 @@
   <div class="personal-area">
     <div class="personal-area__container">
       <div class="personal-area__top">
-        <div class="personal-area__name">Иванов Иван Иванович</div>
-        <div class="personal-area__number">203848504058</div>
-        <div class="personal-area__img">
+        <div class="personal-area__name">
+          {{ PROFILE.last_name }} {{ PROFILE.name }} {{ PROFILE.surname }}
+        </div>
+        <div class="personal-area__number">{{ PROFILE.barcode }}</div>
+        <div class="personal-area__img" v-if="PROFILE.barcode !== null">
           <vue-barcode
-            :code="barcodeData"
-            :value="barcodeData"
+            :code="PROFILE.barcode"
+            :value="PROFILE.barcode"
             :options="{
               background: '#f6f6f6',
               fontSize: '14px',
@@ -16,6 +18,9 @@
               format: 'ITF14',
             }"
           />
+        </div>
+        <div v-else>
+          <span class="personal-area__number">Код отсутствует</span>
         </div>
       </div>
       <div class="personal-nav">
@@ -38,7 +43,7 @@
 <script>
 import code from "@/assets/images/code.png";
 import arrowRight from "@/assets/images/icons/icon-arrow-right.svg";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "v-personal-area",
@@ -46,17 +51,22 @@ export default {
     return {
       code,
       arrowRight,
-      barcodeData: "5901234123457",
     };
   },
   components: {},
   methods: {
-    ...mapActions(["LOGOUT"]),
+    ...mapActions(["LOGOUT", "GET_PROFILE_FROM_API"]),
     logout() {
       this.LOGOUT("logout");
 
       this.$router.push("/authorization");
     },
+  },
+  computed: {
+    ...mapGetters(["PROFILE"]),
+  },
+  mounted() {
+    this.GET_PROFILE_FROM_API();
   },
 };
 </script>

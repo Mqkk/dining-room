@@ -38,4 +38,23 @@ export default {
       return error;
     }
   },
+
+  async GET_PROFILE_FROM_API({ commit }) {
+    try {
+      const token = this.state.token;
+      const profileData = await axios("http://brn-k30-047:8000/api/profile/", {
+        methods: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      commit("SET_PROFILE_TO_STATE", profileData.data);
+
+      return profileData;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 };

@@ -171,4 +171,9 @@ export default {
       product.good__quantity = quantity;
     }
   },
+
+  // profile
+  SET_PROFILE_TO_STATE: (state, profileData) => {
+    state.profileData = profileData;
+  },
 };
