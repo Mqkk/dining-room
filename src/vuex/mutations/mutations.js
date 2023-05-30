@@ -25,15 +25,21 @@ export default {
     state.cart = [];
     state.products = [];
     state.order = [];
+    state.phoneForRecoveryPassword = {};
   },
 
   SET_AUTH(state, isAuthenticated) {
     state.isAuthenticated = isAuthenticated;
   },
 
+  // reconfirmation
+  UPDATE_CODE_FOR_RECONFIRMATION(state, confirmCode) {
+    state.confirmCode = confirmCode;
+  },
+
   // recovery password
-  UPDATE_PHONE_FOR_RECOVERY_PASSWORD(state, payload) {
-    state.phoneForRecoveryPassword = payload;
+  UPDATE_DATA_FOR_RECOVERY_PASSWORD(state, payload) {
+    state.recoveryPasswordData = payload;
   },
 
   // мутация, которая добавляет данные из API в массив

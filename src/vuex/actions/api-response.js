@@ -118,7 +118,61 @@ export default {
           headers: {},
         }
       );
-      commit("UPDATE_PHONE_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
+      commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  async POST_СODE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
+    try {
+      const response = await axios.post(
+        "http://brn-k30-047:8000/api/password/recovery/code/",
+        recoveryPasswordData,
+        {
+          headers: {},
+        }
+      );
+      commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  async POST_PASSWORD_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
+    try {
+      const response = await axios.post(
+        "http://brn-k30-047:8000/api/password/set/",
+        recoveryPasswordData,
+        {
+          headers: {},
+        }
+      );
+      commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  async SEND_CODE_FOR_RECONFIRMATION({ commit }, confirmCode) {
+    try {
+      const response = await axios.post(
+        "http://brn-k30-047:8000/api/reconfirmation/",
+        confirmCode,
+        {
+          headers: {},
+        }
+      );
+      commit("UPDATE_CODE_FOR_RECONFIRMATION", confirmCode);
 
       console.log(response);
     } catch (error) {

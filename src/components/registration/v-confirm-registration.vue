@@ -2,7 +2,7 @@
   <div class="confirmation">
     <div class="confirmation__container">
       <v-title-subtitle :title="title" :subtitle="subtitle" />
-      <form class="form" @submit.prevent="sendingCode">
+      <form class="form content" @submit.prevent="sendingCode">
         <input
           class="input-reset input"
           type="number"
@@ -16,7 +16,13 @@
         >
           Зарегистрироваться
         </button>
-        <span class="form__target"> Отправить код повторно </span>
+        <button
+          class="btn-reset link form__target"
+          @click="sendCodeAgain"
+          type="button"
+        >
+          Отправить код повтороно
+        </button>
       </form>
     </div>
   </div>
@@ -42,11 +48,20 @@ export default {
     vTitleSubtitle,
   },
   methods: {
-    ...mapActions(["POST_DATA_FOR_CONFIRM_REGISTRATION"]),
+    ...mapActions([
+      "POST_DATA_FOR_CONFIRM_REGISTRATION",
+      "SEND_CODE_FOR_RECONFIRMATION",
+    ]),
     async sendingCode(event) {
       event.preventDefault();
       await this.POST_DATA_FOR_CONFIRM_REGISTRATION(this.confirmCode); // действие для отправки формы
       this.$router.push("/authorization");
+    },
+
+    async sendCodeAgain(event) {
+      event.preventDefault();
+
+      this.SEND_CODE_FOR_RECONFIRMATION(this.confirmCode);
     },
   },
 };

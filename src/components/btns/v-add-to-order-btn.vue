@@ -1,6 +1,6 @@
 <template>
   <button class="btn-reset btn btn--medium" @click.prevent="addToOrder">
-    В заказ
+    Купить
   </button>
 </template>
 

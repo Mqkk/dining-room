@@ -1,6 +1,6 @@
 <template>
   <button class="btn-reset btn btn--medium" @click.prevent="addToCart">
-    В корзину
+    Купить
   </button>
 </template>
 

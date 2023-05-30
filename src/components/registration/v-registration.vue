@@ -49,7 +49,7 @@
             id="phone"
             v-model="formData.phone"
             placeholder="Введите номер телефона"
-            v-mask="'+7(###)-###-##-##'"
+            v-mask="'+7 (###) ###-##-##'"
           />
           <span class="error-message" v-if="errors.phone">{{
             errors.phone
@@ -196,10 +196,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.error-message {
-  color: red;
-  font-size: 12px;
-  text-align: left;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -10,7 +10,7 @@
             type="tel"
             class="input-reset input form__input"
             v-model="recoveryPasswordData.phone"
-            v-mask="'+7(###)-###-##-##'"
+            v-mask="'+7 (###) ###-##-##'"
             placeholder="Введите номер телефона"
           />
         </label>
@@ -85,10 +85,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.error-message {
-  color: red;
-  font-size: 12px;
-  text-align: left;
-}
-</style>
+<style lang="scss" scoped></style>

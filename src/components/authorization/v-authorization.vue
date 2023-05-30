@@ -144,10 +144,4 @@ export default {
     text-align: center;
   }
 }
-
-.error-message {
-  color: red;
-  font-size: 12px;
-  text-align: left;
-}
 </style>
