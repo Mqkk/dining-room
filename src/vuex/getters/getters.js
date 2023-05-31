@@ -43,7 +43,25 @@ export default {
     );
   },
 
+  CART_TO_SERVER: (state) => {
+    return state.cart.map((item) => {
+      return {
+        good_id: item.good_id,
+        good__quantity: item.good__quantity,
+        price: item.price * item.good__quantity,
+      };
+    });
+  },
+
   PROFILE(state) {
     return state.profileData;
+  },
+
+  MENU_ID(state) {
+    return state.menuId;
+  },
+
+  ORDER_ID(state) {
+    return state.orderId;
   },
 };

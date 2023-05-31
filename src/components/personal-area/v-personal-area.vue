@@ -15,7 +15,6 @@
               fontSize: '14px',
               displayValue: 'false',
               width: '2',
-              format: 'ITF14',
             }"
           />
         </div>

@@ -89,18 +89,21 @@ export default {
     }
   },
 
-  async SEND_CART_TO_SERVER({ state }) {
+  async SEND_CART_TO_SERVER({ commit }, cartData) {
     try {
       const token = this.state.token;
       const response = await axios.post(
         "http://brn-k30-047:8000/api/order/",
-        state.cart,
+        cartData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      const orderId = response.data.order_id;
+      commit("UPDATE_ORDER_ID", orderId);
+      commit("UPDATE_CART_TO_SERVER", cartData);
 
       console.log(response);
     } catch (error) {

@@ -123,6 +123,7 @@ export default {
     font-weight: 500;
     font-size: 12px;
     line-height: 145%;
+    font-feature-settings: "pnum" on, "lnum" on;
     color: $dark-gray-color;
   }
 

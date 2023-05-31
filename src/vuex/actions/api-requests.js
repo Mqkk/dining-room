@@ -17,6 +17,7 @@ export default {
         commit("SET_PRODUCTS_TO_STATE", products.data);
       } else {
         commit("SET_PRODUCTS_TO_STATE", products.data.items);
+        commit("SET_MENU_ID", products.data.menu_id);
       }
 
       return products;
@@ -28,10 +29,16 @@ export default {
 
   async GET_ORDER_FROM_API({ commit }) {
     try {
-      const order = await axios("http://localhost:3000/items", {
+      // const orderId = this.state.orderId;
+      const token = this.state.token;
+      const order = await axios("http://brn-k30-047:8000/api/order/", {
         methods: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      commit("SET_ORDER_TO_STATE", order.data);
+      commit("SET_ORDER_TO_STATE", order.data.items);
+      console.log(order);
       return order;
     } catch (error) {
       console.log(error);

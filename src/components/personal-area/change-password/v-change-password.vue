@@ -8,7 +8,7 @@
         <div class="form__item form__item--left">
           <label class="form__label">
             <input
-              type="text"
+              type="password"
               class="input-reset input form__input"
               v-model="formData.password"
               placeholder="Введите старый пароль"
@@ -21,7 +21,7 @@
         <div class="form__item form__item--left">
           <label class="form__label">
             <input
-              type="text"
+              type="password"
               class="input-reset input form__input"
               v-model="formData.password_new"
               placeholder="Введите новый пароль"
@@ -34,7 +34,7 @@
         <div class="form__item form__item--left">
           <label class="form__label">
             <input
-              type="text"
+              type="password"
               class="input-reset input form__input"
               v-model="formData.confirmNewPassword"
               placeholder="Подтвердите новый пароль"
@@ -67,6 +67,7 @@ export default {
       formData: {
         password: "",
         password_new: "",
+        confirmNewPassword: "",
       },
       errors: {
         password: "",
@@ -78,9 +79,47 @@ export default {
   methods: {
     ...mapActions(["POST_DATA_FOR_CHANGE_PASSWORD"]),
     async submitChangePassword(event) {
-      // проверка нового пароля и подтверждения пароля
-
       event.preventDefault();
+
+      // Сбросьте предыдущие ошибки перед каждой валидацией
+      this.errors = {
+        password: "",
+        password_new: "",
+        confirmNewPassword: "",
+      };
+
+      // Валидация Старого Пароля
+      if (!this.formData.password) {
+        this.errors.password = "Поле Пароль обязательно для заполнения";
+      } else if (this.formData.password.length < 7) {
+        this.errors.password = "Пароль должен сожержать минимум 8 символов";
+      }
+
+      // Валидация Нового Пароля
+      if (!this.formData.password_new) {
+        this.errors.password_new = "Поле Пароль обязательно для заполнения";
+      } else if (this.formData.password_new.length < 7) {
+        this.errors.password_new = "Пароль должен сожержать минимум 8 символов";
+      }
+
+      // Валидация Повторного пароля
+      if (!this.formData.confirmNewPassword) {
+        this.errors.confirmNewPassword =
+          "Поле Повторите Пароль обязательно для заполнения";
+      } else if (
+        this.formData.password_new !== this.formData.confirmNewPassword
+      ) {
+        this.errors.confirmNewPassword = "Пароли не совпадают";
+      }
+
+      // Если есть ошибки валидации, не отправляем данные
+      const hasErrors = Object.values(this.errors).some(
+        (error) => error !== ""
+      );
+      if (hasErrors) {
+        return;
+      }
+
       await this.POST_DATA_FOR_CHANGE_PASSWORD(this.formData); // вызываем действие для отправки формы
 
       // Переход на страницу успешного восстановления пароля

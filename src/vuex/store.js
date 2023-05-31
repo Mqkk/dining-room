@@ -23,6 +23,9 @@ const store = createStore({
     isAuthenticated: false,
     recoveryPasswordData: {}, // строка для номера телефона при восстановлении пароля
     profileData: {},
+    idMenu: {},
+    cartData: {},
+    orderId: {},
   },
   mutations,
   actions,

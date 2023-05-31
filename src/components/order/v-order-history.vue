@@ -1,9 +1,132 @@
 <template>
-  <div></div>
+  <div class="order-history">
+    <div class="order-history__container">
+      <div class="order-history__top">
+        <v-title-subtitle :title="title" />
+      </div>
+      <div class="order-filter">
+        <h3 class="order-filter__title">Выбрать диапозон дат</h3>
+        <form class="order-filter__form" @submit.prevent>
+          <label>
+            <input
+              type="text"
+              class="input-reset input order-filter__input"
+              placeholder="От"
+            />
+          </label>
+          <label>
+            <input
+              type="text"
+              class="input-reset input order-filter__input"
+              placeholder="До"
+            />
+          </label>
+          <button class="btn-reset order-filter__btn link">Применить</button>
+        </form>
+      </div>
+      <ul class="list-reset order-history__list">
+        <router-link
+          class="order-history__item"
+          v-for="order in orders"
+          :key="order.id"
+          :to="{ name: 'order', params: { id: order.id } }"
+        >
+          <span class="order-history__item-name">{{ order.name }}</span>
+          <span class="order-history__item-total">{{ order.price }}</span>
+        </router-link>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
+import vTitleSubtitle from "../v-title-subtitle.vue";
+
+export default {
+  name: "v-order-history",
+  components: {
+    vTitleSubtitle,
+  },
+  data() {
+    return {
+      title: "История заказов",
+    };
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.order-history {
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $wild-sand-color;
+    padding: 0 $container-offset;
+    height: 57px;
+    font-feature-settings: "pnum" on, "lnum" on;
+    color: $dark-gray-color;
+
+    &:hover {
+      background-color: $alabaster-color;
+    }
+
+    &-name {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    &-total {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: $accent-br;
+      padding: 2px 10px;
+      min-width: 53px;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 145%;
+      color: $accent-color;
+      background-color: $bg-green-color;
+    }
+  }
+}
+
+.order-filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 15px $container-offset;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.04);
+
+  &__title {
+    margin: 0;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: $dark-color;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: 15px;
+  }
+
+  &__btn {
+    font-family: inherit;
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+  }
+}
+</style>

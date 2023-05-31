@@ -83,6 +83,7 @@ export default {
       state.cart.push(product);
     }
   },
+
   SET_ORDER: (state, product) => {
     // логическое выражение, которое проверяет количество товара, и добавляет quantity, а не новый товар
     if (state.order.length) {
@@ -118,6 +119,11 @@ export default {
 
   CLEAR_FROM_CART(state, cart) {
     state.cart = cart;
+  },
+
+  // обновление данных, которые отправляются из корзины
+  UPDATE_CART_TO_SERVER: (state, cartData) => {
+    state.cartData = cartData;
   },
 
   // мутация, которая добавляет данные из API в массив
@@ -175,5 +181,15 @@ export default {
   // profile
   SET_PROFILE_TO_STATE: (state, profileData) => {
     state.profileData = profileData;
+  },
+
+  // дата на сегодняшнее меню
+  SET_MENU_ID(state, menuId) {
+    state.menuId = menuId;
+  },
+
+  // id заказа
+  UPDATE_ORDER_ID(state, orderId) {
+    state.orderId = orderId;
   },
 };

@@ -129,6 +129,7 @@ export default {
     font-size: 12px;
     line-height: 145%;
     text-align: left;
+    font-feature-settings: "pnum" on, "lnum" on;
     color: $dark-gray-color;
   }
 
