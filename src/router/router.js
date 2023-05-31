@@ -17,6 +17,8 @@ import vRecoveryPasswordNew from "@/components/authorization/recovery-password/v
 import vSettings from "@/components/personal-area/v-settings";
 import vChangePassword from "@/components/personal-area/change-password/v-change-password";
 import vProduct from "@/components/v-product";
+import vCompletionRegistration from "@/components/registration/v-completion-registration";
+import vBanRegistration from "@/components/registration/v-ban-registration";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -35,7 +37,7 @@ const router = createRouter({
       meta: { requiresAuth: false },
     },
     {
-      path: "/confirmation",
+      path: "/registration/confirmation",
       name: "confirmation",
       component: vConfirmRegistration,
       props: true,
@@ -115,6 +117,18 @@ const router = createRouter({
       name: "product",
       component: vProduct,
       meta: { requiresAuth: true },
+    },
+    {
+      path: "/registration/completion",
+      name: "completion",
+      component: vCompletionRegistration,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: "/registration/ban",
+      name: "ban",
+      component: vBanRegistration,
+      meta: { requiresAuth: false },
     },
   ],
 });

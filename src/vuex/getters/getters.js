@@ -53,6 +53,16 @@ export default {
     });
   },
 
+  ORDER_FROM_SERVER: (state) => {
+    return state.order.map((item) => {
+      return {
+        good_id: item.product_id,
+        good__name: item.product__name,
+        good__quantity: item.product__quantity,
+      };
+    });
+  },
+
   PROFILE(state) {
     return state.profileData;
   },

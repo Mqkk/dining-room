@@ -186,7 +186,7 @@ export default {
 
       await this.POST_DATA_FOR_REGISTRATION(this.formData);
 
-      this.$router.push("/confirmation");
+      this.$router.push("/registration/confirmation");
     },
     isValidPhoneNumber(phone) {
       const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;

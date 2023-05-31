@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header />
+    <v-header v-if="$route.name !== 'completion' && $route.name !== 'ban'" />
     <v-main-wrapper />
     <v-toolbar v-if="this.IS_AUTHENTICATED === true" />
   </div>

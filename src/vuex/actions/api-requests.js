@@ -37,9 +37,19 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       });
-      commit("SET_ORDER_TO_STATE", order.data.items);
+      const newOrder = order.data.items.map((item) => {
+        return {
+          good_id: item.product_id,
+          good__name: item.product__name,
+          good__quantity: item.product__quantity,
+          good__image: item.product__image,
+          price: item.total_price,
+        };
+      });
+      commit("SET_ORDER_TO_STATE", newOrder);
+      console.log(this.state.order);
       console.log(order);
-      return order;
+      return newOrder;
     } catch (error) {
       console.log(error);
       return error;

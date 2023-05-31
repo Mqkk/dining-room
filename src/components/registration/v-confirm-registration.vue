@@ -55,7 +55,7 @@ export default {
     async sendingCode(event) {
       event.preventDefault();
       await this.POST_DATA_FOR_CONFIRM_REGISTRATION(this.confirmCode); // действие для отправки формы
-      this.$router.push("/authorization");
+      this.$router.push("/registration/completion");
     },
 
     async sendCodeAgain(event) {

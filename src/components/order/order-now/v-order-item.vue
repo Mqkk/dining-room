@@ -5,22 +5,22 @@
       <img
         class="img"
         :src="require('@/assets/images/not-img.png')"
-        :alt="order_data.product__name"
+        :alt="order_data.good__name"
       />
     </div>
     <div class="order-item__content">
-      <div class="order-item__name">{{ order_data.product__name }}</div>
-      <div class="order-item__info">
-        {{ order_data.total_price / order_data.product__quantity }} ₽ / шт.
-      </div>
+      <div class="order-item__name">{{ order_data.good__name }}</div>
+      <div class="order-item__info">{{ order_data.price }} ₽ / шт.</div>
       <div class="order-item__bottom">
         <!-- счетчик -->
         <v-counter
-          :quantity="order_data.product__quantity"
+          :quantity="order_data.good__quantity"
           @incrementItem="incrementItem(index)"
           @decrementItem="decrementItem(index)"
         />
-        <div class="order-item__price">{{ order_data.total_price }} ₽</div>
+        <div class="order-item__price">
+          {{ order_data.price * order_data.good__quantity }} ₽
+        </div>
       </div>
     </div>
     <button class="btn-reset order-item__btn-delete" @click="deleteFromOrder">
