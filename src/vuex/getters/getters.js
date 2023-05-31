@@ -16,6 +16,14 @@ export default {
     return state.order;
   },
 
+  ORDERS_HISTORY(state) {
+    return state.ordersHistory;
+  },
+
+  ORDER_HISTORY_ITEM(state) {
+    return state.orderHistoryItem;
+  },
+
   IS_AUTHENTICATED(state) {
     return state.isAuthenticated;
   },
@@ -32,6 +40,14 @@ export default {
   ORDER_TOTAL_COST: (state) => {
     return state.order.reduce(
       (sum, item) => sum + item.price * item.good__quantity,
+      0
+    );
+  },
+
+  // тотал истории заказа
+  ORDER_HISTORY_TOTAL_COST: (state) => {
+    return state.orderHistoryItem.reduce(
+      (sum, item) => sum + item.total_price * item.quantity,
       0
     );
   },

@@ -20,7 +20,7 @@ export default {
     vToolbar,
   },
   methods: {
-    ...mapActions(["CLEAR_CART"]),
+    ...mapActions(["CLEAR_CART", "GET_ORDER_FROM_API"]),
   },
   computed: {
     ...mapGetters(["IS_AUTHENTICATED", "ORDER"]),

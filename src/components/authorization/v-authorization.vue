@@ -15,9 +15,9 @@
             placeholder="Введите номер телефона"
             v-mask="'+7 (###) ###-##-##'"
           />
-          <span class="error-message" v-if="errors.phone">{{
-            errors.phone
-          }}</span>
+          <span class="error-message" v-if="errors.phone">
+            {{ errors.phone }}
+          </span>
         </div>
         <div class="form__item">
           <div class="form__item form__item--left">
@@ -83,7 +83,6 @@ export default {
       } else if (!this.isValidPhoneNumber(this.formData.phone)) {
         this.errors.phone = "Некорректный номер телефона";
       }
-
       // Валидация Пароля
       if (!this.formData.password) {
         this.errors.password = "Поле обязательно для заполнения";
@@ -97,7 +96,6 @@ export default {
         return;
       } else {
         await this.POST_DATA_FOR_AUTHORIZATION(this.formData); // вызываем действие для отправки формы
-
         this.reloadPage();
       }
 

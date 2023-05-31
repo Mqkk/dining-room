@@ -19,6 +19,8 @@ const store = createStore({
     products: [], // пустой массив, куда пойдут данные из API
     cart: [],
     order: [],
+    ordersHistory: [],
+    orderHistoryItem: [],
     changePasswordData: {},
     isAuthenticated: false,
     recoveryPasswordData: {}, // строка для номера телефона при восстановлении пароля

@@ -10,7 +10,8 @@ import vCatalogWrapper from "@/components/catalog/v-catalog-wrapper";
 import vCartWrapper from "@/components/cart/v-cart-wrapper";
 import vOrderNav from "@/components/order/v-order-nav";
 import vOrderWrapper from "@/components/order/order-now/v-order-wrapper";
-import vOrderHistory from "@/components/order/v-order-history";
+import vOrderHistoryWrapper from "@/components/order/order-history/v-order-history-wrapper";
+import vOrderHistoryMain from "@/components/order/order-history/v-order-history-main";
 import vRecoveryPasswordPhone from "@/components/authorization/recovery-password/v-recovery-password-phone";
 import vRecoveryPasswordVerificationCode from "@/components/authorization/recovery-password/v-recovery-password-verification-code";
 import vRecoveryPasswordNew from "@/components/authorization/recovery-password/v-recovery-password-new";
@@ -79,7 +80,13 @@ const router = createRouter({
     {
       path: "/order-history",
       name: "order-history",
-      component: vOrderHistory,
+      component: vOrderHistoryWrapper,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/order/:id/",
+      name: "order-history-main",
+      component: vOrderHistoryMain,
       meta: { requiresAuth: true },
     },
     {

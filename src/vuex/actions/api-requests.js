@@ -47,9 +47,50 @@ export default {
         };
       });
       commit("SET_ORDER_TO_STATE", newOrder);
-      console.log(this.state.order);
-      console.log(order);
       return newOrder;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  // история заказов
+  async GET_ORDERS_HISTORY_FROM_API({ commit }) {
+    try {
+      const token = this.state.token;
+      const ordersHistory = await axios("http://brn-k30-047:8000/api/orders/", {
+        methods: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      commit("SET_ORDERS_HISTORY_TO_STATE", ordersHistory.data);
+
+      return ordersHistory;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  // страница из истории заказов на конкретный день
+  async GET_ORDER_HISTORY_ITEM_FROM_API({ commit }, id) {
+    try {
+      const token = this.state.token;
+      const orderHistoryItem = await axios(
+        `http://brn-k30-047:8000/api/order/${id}`,
+        {
+          methods: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      commit("SET_ORDER_HISTORY_ITEM_TO_STATE", orderHistoryItem.data);
+
+      return orderHistoryItem;
     } catch (error) {
       console.log(error);
       return error;

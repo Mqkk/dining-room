@@ -48,6 +48,7 @@ export default {
       const cartData = {
         cart: this.CART_TO_SERVER,
         menu_id: this.MENU_ID,
+        total: this.CART_TOTAL_COST,
       };
 
       this.SEND_CART_TO_SERVER(cartData);

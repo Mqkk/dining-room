@@ -65,6 +65,14 @@ export default {
     }
   },
 
+  SET_ORDERS_HISTORY_TO_STATE: (state, ordersHistory) => {
+    state.ordersHistory = ordersHistory;
+  },
+
+  SET_ORDER_HISTORY_ITEM_TO_STATE: (state, orderHistoryItem) => {
+    state.orderHistoryItem = orderHistoryItem;
+  },
+
   SET_CART: (state, product) => {
     // логическое выражение, которое проверяет количество товара, и добавляет quantity, а не новый товар
     if (state.cart.length) {

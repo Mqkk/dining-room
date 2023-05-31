@@ -27,12 +27,12 @@
       <ul class="list-reset order-history__list">
         <router-link
           class="order-history__item"
-          v-for="order in orders"
+          v-for="order in ORDERS_HISTORY"
           :key="order.id"
-          :to="{ name: 'order', params: { id: order.id } }"
+          :to="`/order/${order.id}/`"
         >
-          <span class="order-history__item-name">{{ order.name }}</span>
-          <span class="order-history__item-total">{{ order.price }}</span>
+          <span class="order-history__item-name">{{ order.date }}</span>
+          <span class="order-history__item-total">{{ order.total_cost }}</span>
         </router-link>
       </ul>
     </div>
@@ -40,10 +40,11 @@
 </template>
 
 <script>
-import vTitleSubtitle from "../v-title-subtitle.vue";
+import vTitleSubtitle from "@/components/v-title-subtitle.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "v-order-history",
+  name: "v-order-history-wrapper",
   components: {
     vTitleSubtitle,
   },
@@ -51,6 +52,15 @@ export default {
     return {
       title: "История заказов",
     };
+  },
+  computed: {
+    ...mapGetters(["ORDERS_HISTORY"]),
+  },
+  methods: {
+    ...mapActions(["GET_ORDERS_HISTORY_FROM_API"]),
+  },
+  mounted() {
+    this.GET_ORDERS_HISTORY_FROM_API();
   },
 };
 </script>
