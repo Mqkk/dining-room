@@ -147,6 +147,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !isAuthenticated) {
     next("/authorization");
   } else {
+    store.dispatch("GET_ORDER_FROM_API");
     next();
   }
 });

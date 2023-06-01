@@ -37,17 +37,21 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       });
-      const newOrder = order.data.items.map((item) => {
-        return {
-          good_id: item.product_id,
-          good__name: item.product__name,
-          good__quantity: item.product__quantity,
-          good__image: item.product__image,
-          price: item.total_price,
-        };
-      });
-      commit("SET_ORDER_TO_STATE", newOrder);
-      return newOrder;
+      if (!order.length) {
+        const newOrder = order.data.items.map((item) => {
+          return {
+            good_id: item.product_id,
+            good__name: item.product__name,
+            good__quantity: item.quantity,
+            good__image: item.product__image,
+            price: item.price,
+          };
+        });
+        commit("SET_ORDER_TO_STATE", newOrder);
+        return newOrder;
+      } else {
+        return order;
+      }
     } catch (error) {
       console.log(error);
       return error;

@@ -13,7 +13,7 @@
   <div class="bottom">
     <div class="total">
       <span class="total__name">Итого:</span>
-      <span class="total__value">{{ ORDER_HISTORY_TOTAL_COST }} ₽</span>
+      <span class="total__value">{{ ORDER_HISTORY_ITEM_TOTAL_COST }} ₽</span>
     </div>
   </div>
 </template>
@@ -31,11 +31,11 @@ export default {
   },
   data() {
     return {
-      title: "дата",
+      title: "data",
     };
   },
   computed: {
-    ...mapGetters(["ORDER_HISTORY_ITEM", "ORDER_HISTORY_TOTAL_COST"]),
+    ...mapGetters(["ORDER_HISTORY_ITEM", "ORDER_HISTORY_ITEM_TOTAL_COST"]),
   },
   methods: {
     ...mapActions(["GET_ORDER_HISTORY_ITEM_FROM_API"]),

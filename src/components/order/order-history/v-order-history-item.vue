@@ -10,9 +10,7 @@
     </div>
     <div class="order-item__content">
       <div class="order-item__name">{{ order_data.product__name }}</div>
-      <div class="order-item__info">
-        цена {{ order_data.total_price }} ₽ / шт.
-      </div>
+      <div class="order-item__info">цена {{ order_data.price }} ₽ / шт.</div>
       <div class="order-item__bottom">
         <div class="order-item__price">
           {{ order_data.total_price * order_data.quantity }} ₽

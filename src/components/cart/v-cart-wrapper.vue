@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
-    <div class="cart__container">
-      <p v-if="!CART.length">Корзина пуста</p>
+    <div class="cart__container content">
+      <p v-if="!CART.length" class="message">Корзина пуста</p>
       <v-cart-main v-if="CART.length" :cart_data="CART" />
     </div>
   </div>

@@ -44,8 +44,13 @@ export default {
     );
   },
 
-  // тотал истории заказа
-  ORDER_HISTORY_TOTAL_COST: (state) => {
+  // тотал итстории заказов
+  ORDERS_HISTORY_TOTAL_COST: (state) => {
+    return state.ordersHistory.reduce((sum, item) => sum + item.total_cost, 0);
+  },
+
+  // тотал для заказа из истории
+  ORDER_HISTORY_ITEM_TOTAL_COST: (state) => {
     return state.orderHistoryItem.reduce(
       (sum, item) => sum + item.total_price * item.quantity,
       0
@@ -64,7 +69,8 @@ export default {
       return {
         good_id: item.good_id,
         good__quantity: item.good__quantity,
-        price: item.price * item.good__quantity,
+        total_price: item.price * item.good__quantity,
+        price: item.price,
       };
     });
   },

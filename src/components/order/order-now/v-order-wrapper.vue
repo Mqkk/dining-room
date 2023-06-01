@@ -2,7 +2,7 @@
   <div class="order">
     <div class="order__container">
       <v-title-subtitle :title="title" />
-      <p v-if="!ORDER.length">Заказ отсутствует</p>
+      <p v-if="!ORDER.length" class="message content">Заказ отсутствует</p>
       <v-order-main />
     </div>
   </div>
@@ -13,7 +13,7 @@
       <span class="total__value">{{ ORDER_TOTAL_COST }} ₽</span>
     </div>
     <div class="bottom__btns">
-      <button class="btn-reset btn btn--medium" >Сохранить</button>
+      <button class="btn-reset btn btn--medium">Сохранить</button>
       <button class="btn-reset btn btn--light btn--medium">Отменить</button>
     </div>
   </div>

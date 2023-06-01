@@ -6,9 +6,10 @@
       </div>
       <div class="order-filter">
         <h3 class="order-filter__title">Выбрать диапозон дат</h3>
-        <form class="order-filter__form" @submit.prevent>
+        <form class="order-filter__form" @submit.prevent="applyFilter">
           <label>
             <input
+              v-model="startDate"
               type="text"
               class="input-reset input order-filter__input"
               placeholder="От"
@@ -16,12 +17,15 @@
           </label>
           <label>
             <input
+              v-model="endDate"
               type="text"
               class="input-reset input order-filter__input"
               placeholder="До"
             />
           </label>
-          <button class="btn-reset order-filter__btn link">Применить</button>
+          <button class="btn-reset order-filter__btn link" type="submit">
+            Применить
+          </button>
         </form>
       </div>
       <ul class="list-reset order-history__list">
@@ -32,9 +36,18 @@
           :to="`/order/${order.id}/`"
         >
           <span class="order-history__item-name">{{ order.date }}</span>
-          <span class="order-history__item-total">{{ order.total_cost }}</span>
+          <span class="order-history__item-total"
+            >{{ order.total_cost }} ₽</span
+          >
         </router-link>
       </ul>
+    </div>
+  </div>
+  <!-- нижняя панель -->
+  <div class="bottom">
+    <div class="total">
+      <span class="total__name">Итого:</span>
+      <span class="total__value">{{ ORDERS_HISTORY_TOTAL_COST }} ₽</span>
     </div>
   </div>
 </template>
@@ -51,13 +64,21 @@ export default {
   data() {
     return {
       title: "История заказов",
+      startDate: null,
+      endDate: null,
     };
   },
   computed: {
-    ...mapGetters(["ORDERS_HISTORY"]),
+    ...mapGetters(["ORDERS_HISTORY", "ORDERS_HISTORY_TOTAL_COST"]),
   },
   methods: {
     ...mapActions(["GET_ORDERS_HISTORY_FROM_API"]),
+    applyFilter() {
+      this.GET_ORDERS_HISTORY_FROM_API({
+        startDate: this.startDate,
+        endDate: this.endDate,
+      });
+    },
   },
   mounted() {
     this.GET_ORDERS_HISTORY_FROM_API();
@@ -121,6 +142,7 @@ export default {
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
+    text-align: left;
     color: $dark-color;
   }
 
