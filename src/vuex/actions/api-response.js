@@ -17,10 +17,9 @@ export default {
       commit("SET_TOKEN", token);
       commit("UPDATE_REGISTRATION_FORM_DATA", formData);
 
-      console.log(response.data);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Номер уже используется");
     }
   },
 
@@ -37,10 +36,10 @@ export default {
         }
       );
       commit("UPDATE_CONFIRM_CODE_FOR_REGISTRATION", confirmCode);
-      console.log(response.data);
+
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Неправильный код подтверждения");
     }
   },
 
@@ -59,15 +58,14 @@ export default {
       commit("SET_TOKEN", token);
       commit("UPDATE_DATA_FOR_AUTHORIZATION", loginData);
       commit("SET_AUTH", true);
-      console.log(this.state.isAuthenticated);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Пользователь не существует");
     }
   },
 
+  // изменение пароля
   async POST_DATA_FOR_CHANGE_PASSWORD({ commit }, changePasswordData) {
     try {
       const token = this.state.token;
@@ -82,10 +80,9 @@ export default {
       );
       commit("UPDATE_DATA_FOR_CHANGE_PASSWORD", changePasswordData);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Неправильный старый пароль");
     }
   },
 
@@ -112,6 +109,7 @@ export default {
     }
   },
 
+  // восстановление пароля (отправка номера телефона)
   async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
@@ -123,13 +121,13 @@ export default {
       );
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Номера телефона нет в нашей базе");
     }
   },
 
+  // восстановление пароля (отправка кода подтверждения)
   async POST_СODE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
@@ -141,13 +139,13 @@ export default {
       );
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      return Promise.reject("Неправильный код подтверждения");
     }
   },
 
+  // восстановление пароля (отправка нового пароля)
   async POST_PASSWORD_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(

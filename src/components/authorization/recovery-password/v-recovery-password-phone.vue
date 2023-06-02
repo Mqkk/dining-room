@@ -69,12 +69,18 @@ export default {
       );
       if (hasErrors) {
         return;
+      } else {
+        try {
+          await this.POST_PHONE_FOR_RECOVERY_PASSWORD(
+            this.recoveryPasswordData
+          );
+
+          // переход к следущему этапу
+          this.$router.push("/verification-code");
+        } catch (error) {
+          this.errors.phone = error;
+        }
       }
-
-      this.POST_PHONE_FOR_RECOVERY_PASSWORD(this.recoveryPasswordData);
-
-      // переход к следущему этапу
-      this.$router.push("/verification-code");
     },
 
     isValidPhoneNumber(phone) {

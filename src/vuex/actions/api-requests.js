@@ -29,7 +29,6 @@ export default {
 
   async GET_ORDER_FROM_API({ commit }) {
     try {
-      // const orderId = this.state.orderId;
       const token = this.state.token;
       const order = await axios("http://v-brn-stoltest:8000/api/order/", {
         methods: "GET",
@@ -37,7 +36,8 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!order.length) {
+
+      if (order.data.items) {
         const newOrder = order.data.items.map((item) => {
           return {
             good_id: item.product_id,
@@ -47,13 +47,14 @@ export default {
             price: item.price,
           };
         });
+
         commit("SET_ORDER_TO_STATE", newOrder);
+
         return newOrder;
       } else {
         return order;
       }
     } catch (error) {
-      console.log(error);
       return error;
     }
   },

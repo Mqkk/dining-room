@@ -24,7 +24,7 @@ router.isReady().then(() => {
   }
 });
 
-store.dispatch("GET_ORDER_FROM_API");
+// store.dispatch("GET_ORDER_FROM_API");
 
 if (store.state.order.length) {
   store.dispatch("CLEAR_CART");

@@ -91,21 +91,21 @@ export default {
       // Валидация Старого Пароля
       if (!this.formData.password) {
         this.errors.password = "Поле Пароль обязательно для заполнения";
-      } else if (this.formData.password.length < 7) {
+      } else if (this.formData.password.length < 8) {
         this.errors.password = "Пароль должен сожержать минимум 8 символов";
       }
 
       // Валидация Нового Пароля
       if (!this.formData.password_new) {
         this.errors.password_new = "Поле Пароль обязательно для заполнения";
-      } else if (this.formData.password_new.length < 7) {
+      } else if (this.formData.password_new.length < 8) {
         this.errors.password_new = "Пароль должен сожержать минимум 8 символов";
       }
 
       // Валидация Повторного пароля
       if (!this.formData.confirmNewPassword) {
         this.errors.confirmNewPassword =
-          "Поле Повторите Пароль обязательно для заполнения";
+          "Поле 'Повторите Пароль' обязательно для заполнения";
       } else if (
         this.formData.password_new !== this.formData.confirmNewPassword
       ) {
@@ -118,12 +118,16 @@ export default {
       );
       if (hasErrors) {
         return;
+      } else {
+        try {
+          await this.POST_DATA_FOR_CHANGE_PASSWORD(this.formData); // вызываем действие для отправки формы
+
+          // Переход на страницу успешного восстановления пароля
+          this.$router.push("/settings");
+        } catch (error) {
+          this.errors.password = error;
+        }
       }
-
-      await this.POST_DATA_FOR_CHANGE_PASSWORD(this.formData); // вызываем действие для отправки формы
-
-      // Переход на страницу успешного восстановления пароля
-      this.$router.push("/settings");
     },
   },
   computed: {

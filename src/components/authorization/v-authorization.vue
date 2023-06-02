@@ -95,11 +95,14 @@ export default {
       if (hasErrors) {
         return;
       } else {
-        await this.POST_DATA_FOR_AUTHORIZATION(this.formData); // вызываем действие для отправки формы
-        this.reloadPage();
-      }
+        try {
+          await this.POST_DATA_FOR_AUTHORIZATION(this.formData); // вызываем действие для отправки формы
 
-      // this.$router.push("/catalog");
+          this.reloadPage();
+        } catch (error) {
+          this.errors.phone = error;
+        }
+      }
     },
 
     isValidPhoneNumber(phone) {

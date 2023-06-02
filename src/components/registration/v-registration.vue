@@ -182,11 +182,15 @@ export default {
       );
       if (hasErrors) {
         return;
+      } else {
+        try {
+          await this.POST_DATA_FOR_REGISTRATION(this.formData);
+
+          this.$router.push("/registration/confirmation");
+        } catch (error) {
+          this.errors.phone = error;
+        }
       }
-
-      await this.POST_DATA_FOR_REGISTRATION(this.formData);
-
-      this.$router.push("/registration/confirmation");
     },
     isValidPhoneNumber(phone) {
       const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;

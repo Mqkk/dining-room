@@ -66,14 +66,14 @@ export default {
       event.preventDefault();
 
       this.errors = {
-        phone: "",
+        code: "",
       };
 
       // Валидация Пароля
       if (!this.recoveryPasswordData.code) {
         this.errors.code = "Поле обязательно для заполнения";
-      } else if (this.recoveryPasswordData.code.length < 3) {
-        this.errors.code = "Пароль должен сожержать минимум 4 символов";
+      } else if (this.recoveryPasswordData.code.length < 4) {
+        this.errors.code = "Код должен сожержать 4 символа";
       }
 
       // Если есть ошибки валидации, не отправляем данные
@@ -82,12 +82,16 @@ export default {
       );
       if (hasErrors) {
         return;
+      } else {
+        try {
+          await this.POST_СODE_FOR_RECOVERY_PASSWORD(this.recoveryPasswordData);
+
+          // переход к следующему этапу
+          this.$router.push("/new-password");
+        } catch (error) {
+          this.errors.code = error;
+        }
       }
-
-      this.POST_СODE_FOR_RECOVERY_PASSWORD(this.recoveryPasswordData);
-
-      // переход к следующему этапу
-      this.$router.push("/new-password");
     },
 
     async sendCodeAgain(event) {
