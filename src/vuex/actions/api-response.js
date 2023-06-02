@@ -46,11 +46,11 @@ export default {
 
   async POST_DATA_FOR_AUTHORIZATION({ commit }, loginData) {
     try {
-      await axios.post("http://brn-k30-047:8000/api/login/", loginData, {
+      await axios.post("http://v-brn-stoltest:8000/api/login/", loginData, {
         headers: {},
       });
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/token/obtain/",
+        "http://v-brn-stoltest:8000/api/token/obtain/",
         loginData
       );
       const token = response.data.access;
