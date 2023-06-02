@@ -3,12 +3,12 @@ import axios from "axios";
 export default {
   async POST_DATA_FOR_REGISTRATION({ commit }, formData) {
     try {
-      await axios.post("http://brn-k30-047:8000/api/register/", formData, {
+      await axios.post("http://v-brn-stoltest:8000/api/register/", formData, {
         headers: {},
         withCredentials: true,
       });
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/token/obtain/",
+        "http://v-brn-stoltest:8000/api/token/obtain/",
         formData
       );
       const token = response.data.access;
@@ -28,7 +28,7 @@ export default {
     try {
       const token = this.state.token;
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/confirmation/",
+        "http://v-brn-stoltest:8000/api/confirmation/",
         confirmCode,
         {
           headers: {
@@ -72,7 +72,7 @@ export default {
     try {
       const token = this.state.token;
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/password/",
+        "http://v-brn-stoltest:8000/api/password/",
         changePasswordData,
         {
           headers: {
@@ -93,7 +93,7 @@ export default {
     try {
       const token = this.state.token;
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/order/",
+        "http://v-brn-stoltest:8000/api/order/",
         cartData,
         {
           headers: {
@@ -115,7 +115,7 @@ export default {
   async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/password/recovery/",
+        "http://v-brn-stoltest:8000/api/password/recovery/",
         recoveryPasswordData,
         {
           headers: {},
@@ -133,7 +133,7 @@ export default {
   async POST_СODE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/password/recovery/code/",
+        "http://v-brn-stoltest:8000/api/password/recovery/code/",
         recoveryPasswordData,
         {
           headers: {},
@@ -151,7 +151,7 @@ export default {
   async POST_PASSWORD_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/password/set/",
+        "http://v-brn-stoltest:8000/api/password/set/",
         recoveryPasswordData,
         {
           headers: {},
@@ -169,7 +169,7 @@ export default {
   async SEND_CODE_FOR_RECONFIRMATION({ commit }, confirmCode) {
     try {
       const response = await axios.post(
-        "http://brn-k30-047:8000/api/reconfirmation/",
+        "http://v-brn-stoltest:8000/api/reconfirmation/",
         confirmCode,
         {
           headers: {},
