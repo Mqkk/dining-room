@@ -100,6 +100,7 @@ export default {
 
 <style lang="scss" scoped>
 .product {
+  margin-bottom: 155px;
   color: $dark-color;
 
   &__img {
@@ -112,7 +113,7 @@ export default {
 
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 10px;
   }
@@ -122,6 +123,7 @@ export default {
     font-weight: 700;
     font-size: 16px;
     line-height: 135%;
+    text-align: left;
   }
 
   &__output {
@@ -138,6 +140,7 @@ export default {
     font-size: 16px;
     line-height: 145%;
     font-feature-settings: "pnum" on, "lnum" on;
+    white-space: nowrap;
     color: $accent-color;
   }
 

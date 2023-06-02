@@ -58,6 +58,10 @@ export default {
       width: auto;
       height: auto;
     }
+
+    @media (max-width: 375px) {
+      max-width: 100px;
+    }
   }
 
   &__content {
@@ -68,6 +72,7 @@ export default {
   }
 
   &__name {
+    margin-right: 20px;
     margin-bottom: 2px;
     font-weight: 500;
     font-size: 14px;
