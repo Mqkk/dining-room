@@ -52,7 +52,7 @@ export default {
   // тотал для заказа из истории
   ORDER_HISTORY_ITEM_TOTAL_COST: (state) => {
     return state.orderHistoryItem.reduce(
-      (sum, item) => sum + item.total_price * item.quantity,
+      (sum, item) => sum + item.total_price,
       0
     );
   },

@@ -3,7 +3,15 @@
     <button class="btn-reset counter__btn" @click.prevent="decrementItem">
       <img :src="iconMinus" />
     </button>
-    <span class="counter__value">{{ quantity }}</span>
+    <!-- <span class="counter__value">{{ internalQuantity }}</span> -->
+    <input
+      class="input-reset counter__value"
+      type="number"
+      min="0.5"
+      v-model="inputQuantity"
+      @change="updateQuantity"
+      @click.prevent
+    />
     <button class="btn-reset counter__btn" @click.prevent="incrementItem">
       <img :src="iconPlus" />
     </button>
@@ -20,14 +28,46 @@ export default {
     return {
       iconMinus,
       iconPlus,
+      inputQuantity: "",
+      internalQuantity: this.quantity,
     };
   },
   methods: {
     decrementItem() {
       this.$emit("decrementItem");
+      // для работы инпута
+      this.internalQuantity--;
+      this.inputQuantity = this.internalQuantity.toString();
     },
     incrementItem() {
       this.$emit("incrementItem");
+      // Для работы инпута
+      this.internalQuantity++;
+      this.inputQuantity = this.internalQuantity.toString();
+    },
+
+    updateQuantity() {
+      // преобруем inputQuantity в числовой тип с помощью parseInt
+      const newQuantity = parseInt(this.inputQuantity, 10);
+      // проверяем является ли переменная числом и что она больше 1
+      if (!isNaN(newQuantity) && newQuantity >= 1) {
+        // вычисляем разницу diff
+        const diff = newQuantity - this.internalQuantity;
+        if (diff > 0) {
+          // вызываем метод emulateButtonClick с передачей incrementItem и diff в качестве аргументов. Это эмулирует нажатие кнопки увеличения "diff" раз
+          this.emulateButtonClick(this.incrementItem, diff);
+        } else if (diff < 0) {
+          this.emulateButtonClick(this.decrementItem, -diff);
+        }
+        // обновляем значение internalQuantity значением newQuantity, чтобы отразить изменения
+        this.internalQuantity = newQuantity;
+      }
+    },
+    // эмуляция нажатия кнопки
+    emulateButtonClick(callback, times) {
+      for (let i = 0; i < times; i++) {
+        callback.call(this);
+      }
     },
   },
   props: {
@@ -37,6 +77,15 @@ export default {
         return;
       },
     },
+  },
+  watch: {
+    // наблюдение за изменение значения
+    quantity(newQuantity) {
+      this.inputQuantity = String(newQuantity);
+    },
+  },
+  created() {
+    this.inputQuantity = this.quantity.toString();
   },
 };
 </script>
@@ -74,6 +123,12 @@ export default {
     line-height: 18px;
     color: $dark-gray-color;
     font-feature-settings: "pnum" on, "lnum" on;
+
+    &:focus {
+      outline: none;
+      font-weight: 600;
+      background-color: $alabaster-color;
+    }
   }
 }
 </style>
