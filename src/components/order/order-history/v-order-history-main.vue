@@ -1,5 +1,5 @@
 <template>
-  <v-title-subtitle :title="title" />
+  <v-title-subtitle :title="date" />
   <div class="order-main content">
     <ul class="list-reset order-main__list">
       <v-order-history-item
@@ -29,13 +29,12 @@ export default {
     vOrderHistoryItem,
     vTitleSubtitle,
   },
-  data() {
-    return {
-      title: "data",
-    };
-  },
   computed: {
     ...mapGetters(["ORDER_HISTORY_ITEM", "ORDER_HISTORY_ITEM_TOTAL_COST"]),
+    date(date) {
+      date = this.$route.query.date;
+      return date;
+    },
   },
   methods: {
     ...mapActions(["GET_ORDER_HISTORY_ITEM_FROM_API"]),

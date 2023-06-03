@@ -33,7 +33,7 @@
           class="order-history__item"
           v-for="order in ORDERS_HISTORY"
           :key="order.id"
-          :to="`/order/${order.id}/`"
+          :to="{ path: `/order/${order.id}/`, query: { date: order.date } }"
         >
           <span class="order-history__item-name">{{ order.date }}</span>
           <span class="order-history__item-total"
