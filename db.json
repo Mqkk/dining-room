@@ -1,15 +1,15 @@
 {
   "items": [
-    {
-      "good_id": 545,
-      "good__name": "Пирог закрытый с мясом и картофелем (кг)",
-      "good__category__name": "Сдоба",
-      "price": 390.0,
-      "menu_bar": 1,
-      "output": "1000",
-      "good__description": "",
-      "good__quantity": 1.0,
-      "good__image": "C:\\Users\\HytorniiE\\PycharmProjects\\canteen\\shop\\media/1.jpg"
-    }
+      {
+          "good_id": "3764",
+          "good__name": "Салат из крабовых палочек",
+          "good__category__name": "Холодные закуски",
+          "price": "36.0",
+          "menu_bar": "1",
+          "output": "100",
+          "good__description": "",
+          "good__quantity": "1.0",
+          "good__image": "/www/stolovaya_dev/shop/media/92b2087c-dd99-11db-ad96-0017315fa48e.jpg"
+      }
   ]
 }

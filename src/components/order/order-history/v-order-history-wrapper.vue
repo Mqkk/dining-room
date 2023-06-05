@@ -4,9 +4,9 @@
       <div class="order-history__top">
         <v-title-subtitle :title="title" />
       </div>
-      <div class="order-filter">
+      <div class="order-filter" style="display: none">
         <h3 class="order-filter__title">Выбрать диапозон дат</h3>
-        <form class="order-filter__form" @submit.prevent="applyFilter">
+        <form class="order-filter__form">
           <label>
             <input
               v-model="startDate"
@@ -73,12 +73,6 @@ export default {
   },
   methods: {
     ...mapActions(["GET_ORDERS_HISTORY_FROM_API"]),
-    applyFilter() {
-      this.GET_ORDERS_HISTORY_FROM_API({
-        startDate: this.startDate,
-        endDate: this.endDate,
-      });
-    },
   },
   mounted() {
     this.GET_ORDERS_HISTORY_FROM_API();
@@ -88,6 +82,10 @@ export default {
 
 <style lang="scss" scoped>
 .order-history {
+  &__container {
+    margin-bottom: 105px;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
@@ -97,11 +95,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid $wild-sand-color;
     padding: 0 $container-offset;
     height: 57px;
     font-feature-settings: "pnum" on, "lnum" on;
     color: $dark-gray-color;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $wild-sand-color;
+    }
 
     &:hover {
       background-color: $alabaster-color;
