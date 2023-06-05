@@ -8,6 +8,8 @@
       class="input-reset counter__value"
       type="number"
       min="0.5"
+      max="100"
+      name="counter_input"
       v-model="inputQuantity"
       @change="updateQuantity"
       @click.prevent
@@ -36,7 +38,9 @@ export default {
     decrementItem() {
       this.$emit("decrementItem");
       // для работы инпута
-      this.internalQuantity--;
+      if (this.internalQuantity > 1) {
+        this.internalQuantity--;
+      }
       this.inputQuantity = this.internalQuantity.toString();
     },
     incrementItem() {
@@ -123,11 +127,18 @@ export default {
     line-height: 18px;
     color: $dark-gray-color;
     font-feature-settings: "pnum" on, "lnum" on;
+    background-color: $alabaster-color;
 
     &:focus {
       outline: none;
       font-weight: 600;
       background-color: $alabaster-color;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
   }
 }

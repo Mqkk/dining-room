@@ -129,6 +129,10 @@ export default {
     state.cart = cart;
   },
 
+  CLEAR_FROM_ORDER(state, order) {
+    state.order = order;
+  },
+
   // обновление данных, которые отправляются из корзины
   UPDATE_CART_TO_SERVER: (state, cartData) => {
     state.cartData = cartData;

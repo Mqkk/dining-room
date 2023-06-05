@@ -34,6 +34,10 @@ export default {
     commit("CLEAR_FROM_CART", []);
   },
 
+  CLEAR_ORDER({ commit }) {
+    commit("CLEAR_FROM_ORDER", []);
+  },
+
   // экшн для добавления quantity элементу заказа
   INCREMENT_ORDER_ITEM({ commit }, index) {
     commit("INCREMENT_ORDER", index);

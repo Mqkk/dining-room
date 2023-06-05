@@ -13,14 +13,21 @@
       <span class="total__value">{{ ORDER_TOTAL_COST }} ₽</span>
     </div>
     <div class="bottom__btns">
-      <button class="btn-reset btn btn--medium">Сохранить</button>
-      <button class="btn-reset btn btn--light btn--medium">Отменить</button>
+      <button class="btn-reset btn btn--medium" @click="updateOrderFromApi">
+        Сохранить
+      </button>
+      <button
+        class="btn-reset btn btn--light btn--medium"
+        @click="deleteOrderFromApi"
+      >
+        Отменить
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import vTitleSubtitle from "@/components/v-title-subtitle";
 import vOrderMain from "@/components/order/order-now/v-order-main";
 
@@ -35,8 +42,35 @@ export default {
     vTitleSubtitle,
     vOrderMain,
   },
+  methods: {
+    ...mapActions([
+      "DELETE_ORDER_FROM_API",
+      "CLEAR_ORDER",
+      "SEND_CART_TO_SERVER",
+    ]),
+
+    async deleteOrderFromApi(event) {
+      event.preventDefault();
+
+      this.CLEAR_ORDER();
+      this.DELETE_ORDER_FROM_API();
+      window.location.reload();
+    },
+
+    async updateOrderFromApi(event) {
+      event.preventDefault();
+
+      const orderData = {
+        cart: this.ORDER_TO_SERVER,
+        menu_id: this.MENU_ID,
+        total: this.ORDER_TOTAL_COST,
+      };
+
+      this.SEND_CART_TO_SERVER(orderData);
+    },
+  },
   computed: {
-    ...mapGetters(["ORDER", "ORDER_TOTAL_COST"]),
+    ...mapGetters(["ORDER", "ORDER_TOTAL_COST", "ORDER_TO_SERVER", "MENU_ID"]),
   },
 };
 </script>

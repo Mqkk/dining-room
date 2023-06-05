@@ -51,7 +51,9 @@ export default {
         total: this.CART_TOTAL_COST,
       };
 
+      this.CLEAR_CART();
       this.SEND_CART_TO_SERVER(cartData);
+      window.location.reload();
     },
   },
 };

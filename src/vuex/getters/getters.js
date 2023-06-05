@@ -75,6 +75,17 @@ export default {
     });
   },
 
+  ORDER_TO_SERVER: (state) => {
+    return state.order.map((item) => {
+      return {
+        good_id: item.good_id,
+        good__quantity: item.good__quantity,
+        total_price: item.price * item.good__quantity,
+        price: item.price,
+      };
+    });
+  },
+
   ORDER_FROM_SERVER: (state) => {
     return state.order.map((item) => {
       return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-main content">
+  <div class="cart-main">
     <ul class="list-reset cart-main__list">
       <v-cart-item
         v-for="(item, index) in cart_data"

@@ -7,8 +7,14 @@ import apiRequests from "./actions/api-requests";
 import getters from "./getters/getters";
 import mutations from "./mutations/mutations";
 import apiResponse from "./actions/api-response";
+import apiDelete from "./actions/api-delete";
 
-const actions = { ...commonActions, ...apiRequests, ...apiResponse };
+const actions = {
+  ...commonActions,
+  ...apiRequests,
+  ...apiResponse,
+  ...apiDelete,
+};
 
 const store = createStore({
   state: {
@@ -25,7 +31,7 @@ const store = createStore({
     isAuthenticated: false,
     recoveryPasswordData: {}, // строка для номера телефона при восстановлении пароля
     profileData: {},
-    idMenu: {},
+    menuId: "",
     cartData: {},
     orderId: {},
   },
