@@ -3,14 +3,13 @@
     <button class="btn-reset counter__btn" @click.prevent="decrementItem">
       <img :src="iconMinus" />
     </button>
-    <!-- <span class="counter__value">{{ internalQuantity }}</span> -->
     <input
       class="input-reset counter__value"
       type="number"
+      step="0.5"
       min="0.5"
       max="100"
-      name="counter_input"
-      v-model="inputQuantity"
+      v-model.number="inputQuantity"
       @change="updateQuantity"
       @click.prevent
     />
@@ -30,44 +29,40 @@ export default {
     return {
       iconMinus,
       iconPlus,
-      inputQuantity: "",
+      inputQuantity: null,
       internalQuantity: this.quantity,
     };
   },
   methods: {
     decrementItem() {
       this.$emit("decrementItem");
-      // для работы инпута
       if (this.internalQuantity > 1) {
-        this.internalQuantity--;
+        this.internalQuantity -= 0.5;
       }
-      this.inputQuantity = this.internalQuantity.toString();
+      this.inputQuantity = this.internalQuantity;
     },
     incrementItem() {
       this.$emit("incrementItem");
-      // Для работы инпута
-      this.internalQuantity++;
-      this.inputQuantity = this.internalQuantity.toString();
+      this.internalQuantity += 0.5;
+      this.inputQuantity = this.internalQuantity;
     },
 
     updateQuantity() {
-      // преобруем inputQuantity в числовой тип с помощью parseInt
-      const newQuantity = parseInt(this.inputQuantity, 10);
-      // проверяем является ли переменная числом и что она больше 1
-      if (!isNaN(newQuantity) && newQuantity >= 1) {
-        // вычисляем разницу diff
-        const diff = newQuantity - this.internalQuantity;
+      if (this.inputQuantity >= 0.5) {
+        const roundedQuantity = Math.round(this.inputQuantity * 2) / 2;
+        const diff = roundedQuantity - this.internalQuantity;
         if (diff > 0) {
-          // вызываем метод emulateButtonClick с передачей incrementItem и diff в качестве аргументов. Это эмулирует нажатие кнопки увеличения "diff" раз
-          this.emulateButtonClick(this.incrementItem, diff);
+          this.emulateButtonClick(this.incrementItem, diff / 0.5);
         } else if (diff < 0) {
-          this.emulateButtonClick(this.decrementItem, -diff);
+          this.emulateButtonClick(this.decrementItem, -diff / 0.5);
         }
-        // обновляем значение internalQuantity значением newQuantity, чтобы отразить изменения
-        this.internalQuantity = newQuantity;
+        this.internalQuantity = roundedQuantity;
+        this.inputQuantity = this.internalQuantity;
+      } else {
+        this.inputQuantity = this.internalQuantity;
       }
     },
-    // эмуляция нажатия кнопки
+
     emulateButtonClick(callback, times) {
       for (let i = 0; i < times; i++) {
         callback.call(this);
@@ -83,13 +78,14 @@ export default {
     },
   },
   watch: {
-    // наблюдение за изменение значения
     quantity(newQuantity) {
-      this.inputQuantity = String(newQuantity);
+      this.internalQuantity = parseFloat(newQuantity);
+      this.inputQuantity = this.internalQuantity;
     },
   },
   created() {
-    this.inputQuantity = this.quantity.toString();
+    this.internalQuantity = parseFloat(this.quantity);
+    this.inputQuantity = this.internalQuantity;
   },
 };
 </script>
