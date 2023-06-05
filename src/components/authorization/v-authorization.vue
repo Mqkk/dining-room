@@ -21,13 +21,24 @@
         </div>
         <div class="form__item">
           <div class="form__item form__item--left">
-            <input
-              class="input-reset input"
-              type="password"
-              id="password"
-              v-model="formData.password"
-              placeholder="Введите Пароль"
-            />
+            <div class="input-password">
+              <input
+                class="input-reset input"
+                id="password"
+                :type="showPassword ? 'text' : 'password'"
+                v-model="formData.password"
+                placeholder="Введите Пароль"
+              />
+              <span
+                class="toggle-password"
+                :class="{ 'show-password': showPassword }"
+                @click="showPassword = !showPassword"
+              >
+                <i class="material-icons">
+                  {{ showPassword ? "visibility_off" : "visibility" }}
+                </i>
+              </span>
+            </div>
             <span class="error-message" v-if="errors.password">{{
               errors.password
             }}</span>
@@ -64,6 +75,7 @@ export default {
         phone: "",
         password: "",
       },
+      showPassword: false,
     };
   },
   methods: {
