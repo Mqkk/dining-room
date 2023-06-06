@@ -6,7 +6,7 @@
           class="catalog-main__title"
           @click="toggleCategory(good__category__name)"
         >
-          <span> {{ good__category__name }}</span>
+          <span>{{ good__category__name }}</span>
           <img
             :src="iconArrow"
             :class="{ open: categoryOpen[good__category__name]?.isOpen }"
@@ -80,6 +80,9 @@ export default {
       );
     },
     toggleCategory(category) {
+      if (!this.categoryOpen[category]) {
+        this.categoryOpen[category] = { isOpen: false };
+      }
       this.categoryOpen[category].isOpen = !this.categoryOpen[category].isOpen;
     },
   },
@@ -96,6 +99,16 @@ export default {
   },
   mounted() {
     this.GET_PRODUCTS_FROM_API();
+
+    const isFirst = localStorage.getItem("isFirst");
+    if (!isFirst) {
+      localStorage.setItem("isFirst", true);
+      location.reload();
+    }
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("isFirst");
+    });
 
     this.categories.forEach((category) => {
       this.categoryOpen[category] = { isOpen: true };

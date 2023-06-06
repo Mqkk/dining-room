@@ -25,7 +25,11 @@ export default {
     state.cart = [];
     state.products = [];
     state.order = [];
+    state.menuId = null;
+    state.profileData = {};
     state.phoneForRecoveryPassword = {};
+    localStorage.removeItem("isFirst");
+    localStorage.removeItem("vuex");
   },
 
   SET_AUTH(state, isAuthenticated) {

@@ -22,13 +22,7 @@
         >
           Зарегистрироваться
         </button>
-        <button
-          class="btn-reset link form__target"
-          @click="sendCodeAgain"
-          type="button"
-        >
-          Отправить код повтороно
-        </button>
+        <v-send-code-again :phone="confirmCode.phone" />
       </form>
     </div>
   </div>
@@ -37,6 +31,7 @@
 <script>
 import { mapActions } from "vuex";
 import vTitleSubtitle from "@/components/v-title-subtitle";
+import vSendCodeAgain from "../btns/v-send-code-again.vue";
 
 export default {
   name: "v-confirm-registration",
@@ -55,6 +50,7 @@ export default {
   },
   components: {
     vTitleSubtitle,
+    vSendCodeAgain,
   },
   methods: {
     ...mapActions([
@@ -90,12 +86,6 @@ export default {
           this.errors.code = error;
         }
       }
-    },
-
-    async sendCodeAgain(event) {
-      event.preventDefault();
-
-      this.SEND_CODE_FOR_RECONFIRMATION(this.confirmCode);
     },
   },
 };

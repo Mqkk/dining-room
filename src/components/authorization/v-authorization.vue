@@ -113,14 +113,24 @@ export default {
           this.saveTokenToCookie();
           this.reloadPage();
         } catch (error) {
-          this.errors.phone = error;
+          if (error.response) {
+            if (error.response.status === 401) {
+              this.errors.password = "Невеный пароль или логин";
+              this.errors.phone = "Невеный пароль или логин";
+            }
+            if (error.response.status === 400) {
+              this.errors.password = "Превышено допустимое значение";
+            }
+          } else {
+            this.errors.phone = error;
+          }
         }
       }
     },
 
     saveTokenToCookie(token) {
       token = this.$store.state.token;
-      this.$cookies.set("jwtToken", token, "7d");
+      this.$cookies.set("jwtToken", token, "7d", null, null, true, "trict");
     },
 
     isValidPhoneNumber(phone) {
