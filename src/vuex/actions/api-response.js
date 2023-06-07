@@ -19,7 +19,21 @@ export default {
 
       return response;
     } catch (error) {
-      return Promise.reject("Номер уже используется");
+      if (error.response) {
+        if (error.response.status === 400) {
+          // Обработка ошибки авторизации
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 
@@ -61,7 +75,24 @@ export default {
 
       return response;
     } catch (error) {
-      return Promise.reject("Пользователь не существует");
+      if (error.response) {
+        // Ошибка сервера (код состояния HTTP не в диапазоне 2xx)
+        if (error.response.status === 401) {
+          // Обработка ошибки авторизации
+          return Promise.reject(error);
+        } else if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 

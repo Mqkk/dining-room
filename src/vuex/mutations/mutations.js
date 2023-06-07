@@ -25,7 +25,11 @@ export default {
     state.cart = [];
     state.products = [];
     state.order = [];
+    state.menuId = null;
+    state.profileData = {};
     state.phoneForRecoveryPassword = {};
+    localStorage.removeItem("isFirst");
+    localStorage.removeItem("vuex");
   },
 
   SET_AUTH(state, isAuthenticated) {
@@ -180,6 +184,11 @@ export default {
     if (product.good__quantity > 1) {
       product.good__quantity--;
     }
+  },
+
+  INPUT_PRODUCT_QUANTITY: (state, payload) => {
+    const { product, quantity } = payload;
+    product.good__quantity = quantity;
   },
 
   UPDATE_PRODUCT_QUANTITY: (state, payload) => {

@@ -3,7 +3,7 @@
     <div class="recovery-password__container">
       <v-title-subtitle :title="title" :subtitle="subtitle" />
     </div>
-    <form class="form recover-password__form content" submit.prevent>
+    <form class="form recover-password__form content" @submit.prevent>
       <div class="form__item form__item--left">
         <label class="form__label">
           <input
@@ -24,25 +24,21 @@
       >
         Подтвердить
       </button>
-      <button
-        class="btn-reset link form__target"
-        @click="sendCodeAgain"
-        type="button"
-      >
-        Отправить код повтороно
-      </button>
+      <v-send-code-again :phone="recoveryPasswordData.phone" />
     </form>
   </div>
 </template>
 
 <script>
 import vTitleSubtitle from "@/components/v-title-subtitle.vue";
+import vSendCodeAgain from "@/components/btns/v-send-code-again.vue";
 import { mapActions } from "vuex";
 
 export default {
   name: "v-recovery-password-verification-code",
   components: {
     vTitleSubtitle,
+    vSendCodeAgain,
   },
   data() {
     return {
@@ -58,10 +54,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "POST_СODE_FOR_RECOVERY_PASSWORD",
-      "SEND_CODE_FOR_RECONFIRMATION",
-    ]),
+    ...mapActions(["POST_СODE_FOR_RECOVERY_PASSWORD"]),
     async submitVerificationCode(event) {
       event.preventDefault();
 
@@ -73,7 +66,7 @@ export default {
       if (!this.recoveryPasswordData.code) {
         this.errors.code = "Поле обязательно для заполнения";
       } else if (this.recoveryPasswordData.code.length < 4) {
-        this.errors.code = "Код должен сожержать 4 символа";
+        this.errors.code = "Код должен содержать 4 символа";
       }
 
       // Если есть ошибки валидации, не отправляем данные
@@ -93,14 +86,6 @@ export default {
         }
       }
     },
-
-    async sendCodeAgain(event) {
-      event.preventDefault();
-
-      this.SEND_CODE_FOR_RECONFIRMATION(this.recoveryPasswordData);
-    },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

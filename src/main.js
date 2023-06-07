@@ -5,9 +5,10 @@ import router from "./router/router.js";
 import "material-design-icons-iconfont";
 import VueTheMask from "vue-the-mask";
 import VueBarcode from "@chenfengyuan/vue-barcode";
+import VueCookies from "vue-cookies";
 
 const app = createApp(App);
-app.use(VueTheMask).use(store).use(router);
+app.use(VueTheMask).use(VueCookies).use(store).use(router);
 app.component(VueBarcode.name, VueBarcode);
 
 const isAuthenticated = store.state.isAuthenticated;
@@ -23,8 +24,6 @@ router.isReady().then(() => {
     router.push("/authorization");
   }
 });
-
-// store.dispatch("GET_ORDER_FROM_API");
 
 if (store.state.order.length) {
   store.dispatch("CLEAR_CART");

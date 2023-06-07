@@ -5,12 +5,10 @@
     </button>
     <input
       class="input-reset counter__value"
-      type="number"
-      step="0.5"
-      min="0.5"
-      max="100"
-      v-model.number="inputQuantity"
-      @change="updateQuantity"
+      name="input_value"
+      v-model="localQuantity"
+      @input="validateQuantity"
+      @keypress="handleKeyPress"
       @click.prevent
     />
     <button class="btn-reset counter__btn" @click.prevent="incrementItem">
@@ -22,6 +20,7 @@
 <script>
 import iconMinus from "@/assets/images/icons/icon-minus.svg";
 import iconPlus from "@/assets/images/icons/icon-plus.svg";
+import { mapActions } from "vuex";
 
 export default {
   name: "v-counter",
@@ -29,43 +28,64 @@ export default {
     return {
       iconMinus,
       iconPlus,
-      inputQuantity: null,
-      internalQuantity: this.quantity,
+      localQuantity: this.quantity,
     };
   },
+  watch: {
+    quantity(newQuantity) {
+      this.localQuantity = newQuantity;
+    },
+  },
   methods: {
+    ...mapActions([
+      "INPUT_QUANTITY_PRODUCT_ITEM",
+      "INPUT_QUANTITY_CART_ITEM",
+      "INPUT_QUANTITY_CART_ITEM",
+    ]),
     decrementItem() {
       this.$emit("decrementItem");
-      if (this.internalQuantity > 1) {
-        this.internalQuantity -= 0.5;
+      // для работы инпута
+      if (this.localQuantity > 1) {
+        this.localQuantity--;
       }
-      this.inputQuantity = this.internalQuantity;
     },
     incrementItem() {
       this.$emit("incrementItem");
-      this.internalQuantity += 0.5;
-      this.inputQuantity = this.internalQuantity;
+      // // Для работы инпута
+      this.localQuantity++;
     },
 
-    updateQuantity() {
-      if (this.inputQuantity >= 0.5) {
-        const roundedQuantity = Math.round(this.inputQuantity * 2) / 2;
-        const diff = roundedQuantity - this.internalQuantity;
-        if (diff > 0) {
-          this.emulateButtonClick(this.incrementItem, diff / 0.5);
-        } else if (diff < 0) {
-          this.emulateButtonClick(this.decrementItem, -diff / 0.5);
+    inputProductQuantity() {
+      this.INPUT_QUANTITY_PRODUCT_ITEM({
+        product: this.product,
+        quantity: this.localQuantity,
+        index: this.index,
+      });
+    },
+    validateQuantity() {
+      const regex = /^(?!0$)(?!0\.$)(?!100(?:\.0)?$)(\d{1,2}(?:\.([05])?)?)?$/;
+      const match = this.localQuantity.match(regex);
+
+      if (match) {
+        // Если введенное значение соответствует шаблону
+        if (!match[2]) {
+          // Если после точки не указано 0 или 5, заменяем на 1
+          this.localQuantity = match[1] ? match[1] + "" : "0.5";
         }
-        this.internalQuantity = roundedQuantity;
-        this.inputQuantity = this.internalQuantity;
       } else {
-        this.inputQuantity = this.internalQuantity;
+        // Если введенное значение не соответствует шаблону
+        this.localQuantity = this.quantity; // Восстанавливаем предыдущее значение
       }
+
+      this.inputProductQuantity();
     },
 
-    emulateButtonClick(callback, times) {
-      for (let i = 0; i < times; i++) {
-        callback.call(this);
+    handleKeyPress(event) {
+      const char = String.fromCharCode(event.which);
+      const regex = /^[0-9.]$/;
+      if (!regex.test(char)) {
+        // Если введенный символ не является цифрой
+        event.preventDefault();
       }
     },
   },
@@ -76,16 +96,18 @@ export default {
         return;
       },
     },
-  },
-  watch: {
-    quantity(newQuantity) {
-      this.internalQuantity = parseFloat(newQuantity);
-      this.inputQuantity = this.internalQuantity;
+    product: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
-  },
-  created() {
-    this.internalQuantity = parseFloat(this.quantity);
-    this.inputQuantity = this.internalQuantity;
+    index: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
   },
 };
 </script>

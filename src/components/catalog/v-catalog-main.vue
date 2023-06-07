@@ -6,7 +6,7 @@
           class="catalog-main__title"
           @click="toggleCategory(good__category__name)"
         >
-          <span> {{ good__category__name }}</span>
+          <span>{{ good__category__name }}</span>
           <img
             :src="iconArrow"
             :class="{ open: categoryOpen[good__category__name]?.isOpen }"
@@ -26,6 +26,7 @@
             @addToOrder="addToOrder"
             @incrementItem="incrementItem(product)"
             @decrementItem="decrementItem(product)"
+            @inputProductQuantity="inputProductQuantity(product)"
           />
         </ul>
       </div>
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import vCatalogItem from "@/components/catalog/v-catalog-item";
 import vRestricted from "../v-restricted.vue";
 import iconArrow from "@/assets/images/icons/icon-arrow-menu.svg";
@@ -61,7 +62,9 @@ export default {
       "ADD_TO_ORDER",
       "DECREMENT_PRODUCT_ITEM",
       "INCREMENT_PRODUCT_ITEM",
+      "INPUT_QUANTITY_PRODUCT_ITEM",
     ]),
+    ...mapMutations(["INPUT_PRODUCT_QUANTITY"]),
     addToCart(el) {
       this.ADD_TO_CART(el);
     },
@@ -74,12 +77,18 @@ export default {
     incrementItem(product) {
       this.INCREMENT_PRODUCT_ITEM(product);
     },
+    inputProductQuantity(product) {
+      this.INPUT_QUANTITY_PRODUCT_ITEM(product);
+    },
     filteredProducts(good__category__name) {
       return this.PRODUCTS.filter(
         (product) => product.good__category__name === good__category__name
       );
     },
     toggleCategory(category) {
+      if (!this.categoryOpen[category]) {
+        this.categoryOpen[category] = { isOpen: false };
+      }
       this.categoryOpen[category].isOpen = !this.categoryOpen[category].isOpen;
     },
   },
@@ -96,6 +105,16 @@ export default {
   },
   mounted() {
     this.GET_PRODUCTS_FROM_API();
+
+    const isFirst = localStorage.getItem("isFirst");
+    if (!isFirst) {
+      localStorage.setItem("isFirst", true);
+      location.reload();
+    }
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("isFirst");
+    });
 
     this.categories.forEach((category) => {
       this.categoryOpen[category] = { isOpen: true };

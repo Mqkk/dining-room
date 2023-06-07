@@ -15,6 +15,8 @@
         <!-- счетчик -->
         <v-counter
           :quantity="cart_item_data.good__quantity"
+          :product="cart_item_data"
+          :index="index"
           @incrementItem="incrementItem(index)"
           @decrementItem="decrementItem(index)"
         />
@@ -48,6 +50,12 @@ export default {
       type: Object,
       default() {
         return {};
+      },
+    },
+    index: {
+      type: Number,
+      default() {
+        return 0;
       },
     },
   },

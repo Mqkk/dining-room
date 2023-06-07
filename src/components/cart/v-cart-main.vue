@@ -3,6 +3,7 @@
     <ul class="list-reset cart-main__list">
       <v-cart-item
         v-for="(item, index) in cart_data"
+        :index="index"
         :key="item.good_id"
         :cart_item_data="item"
         @deleteFromCart="deleteFromCart(index)"

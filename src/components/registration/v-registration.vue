@@ -188,7 +188,18 @@ export default {
 
           this.$router.push("/registration/confirmation");
         } catch (error) {
-          this.errors.phone = error;
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.errors.phone = "Номер уже существует";
+            }
+          } else {
+            this.errors.lastName = error;
+            this.errors.name = error;
+            this.errors.surname = error;
+            this.errors.phone = error;
+            this.errors.password = error;
+            this.errors.password2 = error;
+          }
         }
       }
     },

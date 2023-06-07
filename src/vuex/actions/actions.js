@@ -59,4 +59,8 @@ export default {
   DECREMENT_PRODUCT_ITEM({ commit }, product) {
     commit("DECREMENT_PRODUCT", product);
   },
+
+  INPUT_QUANTITY_PRODUCT_ITEM({ commit }, payload) {
+    commit("INPUT_PRODUCT_QUANTITY", payload);
+  },
 };
