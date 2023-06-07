@@ -34,6 +34,7 @@
       <!-- счетчик -->
       <v-counter
         :quantity="product.good__quantity"
+        :product="product"
         @incrementItem="incrementItem(index)"
         @decrementItem="decrementItem(index)"
       />
