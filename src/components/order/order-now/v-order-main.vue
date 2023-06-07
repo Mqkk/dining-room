@@ -4,6 +4,7 @@
       <v-order-item
         v-for="(order, index) in ORDER"
         :key="order.good_id"
+        :index="index"
         :order_data="order"
         @deleteFromOrder="deleteFromOrder(index)"
         @incrementItem="incrementItem(index)"

@@ -26,6 +26,7 @@
             @addToOrder="addToOrder"
             @incrementItem="incrementItem(product)"
             @decrementItem="decrementItem(product)"
+            @inputProductQuantity="inputProductQuantity(product)"
           />
         </ul>
       </div>
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import vCatalogItem from "@/components/catalog/v-catalog-item";
 import vRestricted from "../v-restricted.vue";
 import iconArrow from "@/assets/images/icons/icon-arrow-menu.svg";
@@ -61,7 +62,9 @@ export default {
       "ADD_TO_ORDER",
       "DECREMENT_PRODUCT_ITEM",
       "INCREMENT_PRODUCT_ITEM",
+      "INPUT_QUANTITY_PRODUCT_ITEM",
     ]),
+    ...mapMutations(["INPUT_PRODUCT_QUANTITY"]),
     addToCart(el) {
       this.ADD_TO_CART(el);
     },
@@ -73,6 +76,9 @@ export default {
     },
     incrementItem(product) {
       this.INCREMENT_PRODUCT_ITEM(product);
+    },
+    inputProductQuantity(product) {
+      this.INPUT_QUANTITY_PRODUCT_ITEM(product);
     },
     filteredProducts(good__category__name) {
       return this.PRODUCTS.filter(

@@ -186,6 +186,11 @@ export default {
     }
   },
 
+  INPUT_PRODUCT_QUANTITY: (state, payload) => {
+    const { product, quantity } = payload;
+    product.good__quantity = quantity;
+  },
+
   UPDATE_PRODUCT_QUANTITY: (state, payload) => {
     const { good_id, quantity } = payload;
     const product = state.products.find((p) => p.good_id === good_id);

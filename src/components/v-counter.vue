@@ -3,15 +3,12 @@
     <button class="btn-reset counter__btn" @click.prevent="decrementItem">
       <img :src="iconMinus" />
     </button>
-    <!-- <span class="counter__value">{{ internalQuantity }}</span> -->
     <input
       class="input-reset counter__value"
-      type="number"
-      min="1"
-      max="100"
-      name="counter_input"
-      v-model="inputQuantity"
-      @change="updateQuantity"
+      name="input_value"
+      v-model="localQuantity"
+      @input="validateQuantity"
+      @keypress="handleKeyPress"
       @click.prevent
     />
     <button class="btn-reset counter__btn" @click.prevent="incrementItem">
@@ -23,6 +20,7 @@
 <script>
 import iconMinus from "@/assets/images/icons/icon-minus.svg";
 import iconPlus from "@/assets/images/icons/icon-plus.svg";
+import { mapActions } from "vuex";
 
 export default {
   name: "v-counter",
@@ -30,47 +28,64 @@ export default {
     return {
       iconMinus,
       iconPlus,
-      inputQuantity: "",
-      internalQuantity: this.quantity,
+      localQuantity: this.quantity,
     };
   },
+  watch: {
+    quantity(newQuantity) {
+      this.localQuantity = newQuantity;
+    },
+  },
   methods: {
+    ...mapActions([
+      "INPUT_QUANTITY_PRODUCT_ITEM",
+      "INPUT_QUANTITY_CART_ITEM",
+      "INPUT_QUANTITY_CART_ITEM",
+    ]),
     decrementItem() {
       this.$emit("decrementItem");
       // для работы инпута
-      if (this.internalQuantity > 1) {
-        this.internalQuantity--;
+      if (this.localQuantity > 1) {
+        this.localQuantity--;
       }
-      this.inputQuantity = this.internalQuantity.toString();
     },
     incrementItem() {
       this.$emit("incrementItem");
-      // Для работы инпута
-      this.internalQuantity++;
-      this.inputQuantity = this.internalQuantity.toString();
+      // // Для работы инпута
+      this.localQuantity++;
     },
 
-    updateQuantity() {
-      // преобруем inputQuantity в числовой тип с помощью parseInt
-      const newQuantity = parseFloat(this.inputQuantity, 10);
-      // проверяем является ли переменная числом и что она больше 1
-      if (!isNaN(newQuantity) && newQuantity >= 1) {
-        // вычисляем разницу diff
-        const diff = newQuantity - this.internalQuantity;
-        if (diff > 0) {
-          // вызываем метод emulateButtonClick с передачей incrementItem и diff в качестве аргументов. Это эмулирует нажатие кнопки увеличения "diff" раз
-          this.emulateButtonClick(this.incrementItem, diff);
-        } else if (diff < 0) {
-          this.emulateButtonClick(this.decrementItem, -diff);
-        }
-        // обновляем значение internalQuantity значением newQuantity, чтобы отразить изменения
-        this.internalQuantity = newQuantity;
-      }
+    inputProductQuantity() {
+      this.INPUT_QUANTITY_PRODUCT_ITEM({
+        product: this.product,
+        quantity: this.localQuantity,
+        index: this.index,
+      });
     },
-    // эмуляция нажатия кнопки
-    emulateButtonClick(callback, times) {
-      for (let i = 0; i < times; i++) {
-        callback.call(this);
+    validateQuantity() {
+      const regex = /^(?!0$)(?!0\.$)(?!100(?:\.0)?$)(\d{1,2}(?:\.([05])?)?)?$/;
+      const match = this.localQuantity.match(regex);
+
+      if (match) {
+        // Если введенное значение соответствует шаблону
+        if (!match[2]) {
+          // Если после точки не указано 0 или 5, заменяем на 1
+          this.localQuantity = match[1] ? match[1] + "" : "0.5";
+        }
+      } else {
+        // Если введенное значение не соответствует шаблону
+        this.localQuantity = this.quantity; // Восстанавливаем предыдущее значение
+      }
+
+      this.inputProductQuantity();
+    },
+
+    handleKeyPress(event) {
+      const char = String.fromCharCode(event.which);
+      const regex = /^[0-9.]$/;
+      if (!regex.test(char)) {
+        // Если введенный символ не является цифрой
+        event.preventDefault();
       }
     },
   },
@@ -81,15 +96,18 @@ export default {
         return;
       },
     },
-  },
-  watch: {
-    // наблюдение за изменение значения
-    quantity(newQuantity) {
-      this.inputQuantity = String(newQuantity);
+    product: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
-  },
-  created() {
-    this.inputQuantity = this.quantity.toString();
+    index: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
   },
 };
 </script>

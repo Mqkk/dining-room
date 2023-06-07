@@ -18,8 +18,11 @@
       <!-- счетчик -->
       <v-counter
         :quantity="product_data.good__quantity"
+        :product="product_data"
+        :index="index"
         @incrementItem="incrementItem(index)"
         @decrementItem="decrementItem(index)"
+        @inputProductQuantity="inputProductQuantity(index)"
       />
       <!-- кнопка добавления товара -->
       <v-add-to-order-btn
@@ -67,6 +70,12 @@ export default {
         return {};
       },
     },
+    index: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
   },
   methods: {
     // метод для добавления товара в корзину (поднимаем родителю)
@@ -81,6 +90,9 @@ export default {
     },
     incrementItem() {
       this.$emit("incrementItem");
+    },
+    inputProductQuantity() {
+      this.$emit("inputProductQuantity");
     },
   },
 };
