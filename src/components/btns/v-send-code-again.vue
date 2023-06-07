@@ -1,7 +1,7 @@
 <template>
   <div v-show="!showButton && remainingTime > 0" class="timer">
     Повторная отправка доступна через
-    <span class="timer__span"> {{ remainingTime }}</span> с.
+    <span class="timer__span"> {{ remainingTime }} с.</span>
   </div>
   <button
     v-show="showButton || remainingTime === 0"
@@ -102,4 +102,20 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.timer {
+  display: flex;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 135%;
+  text-align: left;
+  font-feature-settings: "pnum" on, "lnum" on;
+  color: $silver-color;
+
+  &__span {
+    display: block;
+    margin-left: 3px;
+    width: 50px;
+  }
+}
+</style>
