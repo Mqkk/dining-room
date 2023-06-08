@@ -1,11 +1,10 @@
 <template>
   <li class="order-item">
     <div class="order-item__img">
-      <!-- :src="require('@/assets/images/' + order_data.image)" -->
       <img
         class="img"
-        :src="require('@/assets/images/not-img.png')"
-        :alt="order_data.product__name"
+        :alt="order_data.good__name"
+        :src="`http://v-brn-StolTest:8000${order_data.product__image}`"
       />
     </div>
     <div class="order-item__content">
@@ -36,7 +35,7 @@ export default {
 .order-item {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   border: 1px solid $wild-sand-color;
   border-radius: $accent-br;
   padding: 4px;
@@ -49,12 +48,18 @@ export default {
 
   &__img {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    border-radius: $accent-br;
     max-width: 120px;
-    max-height: 80px;
+    max-height: 85px;
+    overflow: hidden;
 
     img {
-      width: auto;
-      height: auto;
+      border-radius: $accent-br;
+      width: 120px;
+      height: fit-content;
     }
 
     @media (max-width: 375px) {

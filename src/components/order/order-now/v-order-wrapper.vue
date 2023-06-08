@@ -94,7 +94,9 @@ export default {
     },
 
     async checkServerStatus() {
-      const response = await fetch("");
+      const response = await fetch(
+        "http://v-brn-stoltest:8000/api/check_server_status/"
+      );
       if (!response.ok) {
         throw new Error("SE");
       }

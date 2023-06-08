@@ -2,11 +2,10 @@
   <div class="product">
     <div class="product__container">
       <div class="product__img">
-        <!-- :src="require('../assets/images/' + product.image)" -->
         <img
           class="img"
-          :src="require('../assets/images/not-img.png')"
           :alt="product.good__name"
+          :src="`http://v-brn-StolTest:8000${product.good__image}`"
         />
       </div>
       <div class="product__content content">

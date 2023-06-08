@@ -134,8 +134,6 @@ export default {
       const orderId = response.data.order_id;
       commit("UPDATE_ORDER_ID", orderId);
       commit("UPDATE_CART_TO_SERVER", cartData);
-
-      console.log(response);
     } catch (error) {
       console.log(error);
       return error;

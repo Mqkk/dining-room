@@ -41,7 +41,14 @@ const store = createStore({
   plugins: [
     createPersistedState({
       storage: window.localStorage,
-      paths: ["token", "isAuthenticated", "recoveryPasswordData", "products"],
+      paths: [
+        "token",
+        "isAuthenticated",
+        "recoveryPasswordData",
+        "products",
+        "cart",
+        "order",
+      ],
     }),
   ],
 });

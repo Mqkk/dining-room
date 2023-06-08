@@ -44,7 +44,6 @@ export default {
     ...mapActions(["CLEAR_CART", "SEND_CART_TO_SERVER"]),
     async sendCartToServer(event) {
       event.preventDefault();
-
       const cartData = {
         cart: this.CART_TO_SERVER,
         menu_id: this.MENU_ID,

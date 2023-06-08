@@ -117,12 +117,25 @@ export default {
   &__img {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 8px;
+    border-radius: $accent-br;
+    overflow: hidden;
     width: auto;
-    height: 140px;
+    height: 185px;
 
     img {
+      border-radius: $accent-br;
       width: 100%;
+      height: fit-content;
+    }
+
+    @media (max-width: 424px) {
+      height: 150px;
+    }
+
+    @media (max-width: 375px) {
+      height: 130px;
     }
   }
 
