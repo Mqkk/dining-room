@@ -6,7 +6,7 @@
         <img
           class="img"
           :alt="product_data.good__name"
-          :src="require('../../../../../../' + product_data.good__image)"
+          :src="product_data.good__image"
         />
       </div>
       <div class="catalog-item__name">{{ product_data.good__name }}</div>
