@@ -50,6 +50,8 @@ export default {
         }
       );
       commit("UPDATE_CONFIRM_CODE_FOR_REGISTRATION", confirmCode);
+      this.state.registrationData = {};
+      localStorage.removeItem("vuex");
 
       return response;
     } catch (error) {

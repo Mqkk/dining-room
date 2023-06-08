@@ -1,10 +1,10 @@
 <template>
-  <div v-show="!showButton && remainingTime > 0" class="timer">
+  <div v-show="!showButton" class="timer">
     Повторная отправка доступна через
-    <span class="timer__span"> {{ remainingTime }} с.</span>
+    <span class="timer__span">2 минуты</span>
   </div>
   <button
-    v-show="showButton || remainingTime === 0"
+    v-show="showButton"
     class="btn-reset link form__target"
     @click="sendCodeAgain"
     type="button"
@@ -116,6 +116,7 @@ export default {
     display: block;
     margin-left: 3px;
     width: 50px;
+    white-space: nowrap;
   }
 }
 </style>

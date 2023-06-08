@@ -28,8 +28,8 @@ export default {
     state.menuId = null;
     state.profileData = {};
     state.phoneForRecoveryPassword = {};
+    state.recoveryPasswordData = null;
     localStorage.removeItem("isFirst");
-    localStorage.removeItem("vuex");
   },
 
   SET_AUTH(state, isAuthenticated) {

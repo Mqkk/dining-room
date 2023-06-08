@@ -1,16 +1,21 @@
 <template>
   <button class="btn-reset btn btn--medium" @click.prevent="addToCart">
-    Купить
+    {{ product.isInCart ? "В корзине" : "Купить" }}
   </button>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "v-add-to-cart-btn",
+  computed: {
+    ...mapGetters(["CART"]),
+    // isInCart() {
+    //   return this.CART.some((p) => p.id === this.product.id);
+    // },
+  },
   methods: {
-    ...mapActions(["ADD_TO_CART"]),
     addToCart() {
       this.$emit("addToCart", this.product);
     },
@@ -21,6 +26,10 @@ export default {
       default() {
         return {};
       },
+    },
+    isInCart: {
+      type: Boolean,
+      default: false,
     },
   },
 };

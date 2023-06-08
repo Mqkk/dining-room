@@ -16,6 +16,11 @@
       <div v-else-if="$route.path === '/authorization'">
         <h2 class="header__title"></h2>
       </div>
+      <div v-else-if="$route.path === '/verification-code'">
+        <button class="btn-reset header__btn" @click="backHome">
+          <img :src="iconArrow" alt="Назад" />
+        </button>
+      </div>
       <div v-else>
         <button class="btn-reset header__btn" @click="back">
           <img :src="iconArrow" alt="Назад" />
@@ -38,6 +43,9 @@ export default {
   methods: {
     back() {
       window.history.back();
+    },
+    backHome() {
+      window.history.go("/authorization");
     },
   },
   props: ["headerTitle"],

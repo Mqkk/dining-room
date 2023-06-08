@@ -54,6 +54,11 @@ export default {
       this.CLEAR_CART();
       this.SEND_CART_TO_SERVER(cartData);
       window.location.reload();
+      this.$notify({
+        title: "Заказ оформлен",
+        text: "Вы можете посмотреть его в Заказах",
+        type: "success",
+      });
     },
   },
 };

@@ -1,16 +1,21 @@
 <template>
   <button class="btn-reset btn btn--medium" @click.prevent="addToOrder">
-    Купить
+    {{ product.isInOrder ? "Заказано" : "Купить" }}
   </button>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "v-add-to-order-btn",
+  computed: {
+    ...mapGetters(["ORDER"]),
+    isInOrder() {
+      return this.ORDER.some((p) => p.id === this.product.id);
+    },
+  },
   methods: {
-    ...mapActions(["ADD_TO_ORDER"]),
     addToOrder() {
       this.$emit("addToOrder", this.product);
     },

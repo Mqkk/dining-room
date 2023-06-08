@@ -3,11 +3,10 @@
     <div class="catalog-item__top">
       <!-- подстановка данных в компонент -->
       <div class="catalog-item__img">
-        <!-- :src="require('@/assets/images/' + product_data.image)" -->
         <img
           class="img"
-          :src="require('@/assets/images/not-img.png')"
           :alt="product_data.good__name"
+          :src="product_data.good__image"
         />
       </div>
       <div class="catalog-item__name">{{ product_data.good__name }}</div>
@@ -31,6 +30,7 @@
         v-if="this.ORDER.length"
       />
       <v-add-to-cart-btn
+        :isInCart="isProductInCart(product_data)"
         :product="product_data"
         @addToCart="addToCart"
         v-else
@@ -61,7 +61,7 @@ export default {
     vCounter,
   },
   computed: {
-    ...mapGetters(["ORDER"]),
+    ...mapGetters(["ORDER", "CART"]),
   },
   props: {
     product_data: {
@@ -93,6 +93,9 @@ export default {
     },
     inputProductQuantity() {
       this.$emit("inputProductQuantity");
+    },
+    isProductInCart(productId) {
+      return this.CART.some((item) => item.id === productId);
     },
   },
 };

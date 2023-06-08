@@ -6,8 +6,6 @@ export default {
 
   LOGOUT({ commit }) {
     commit("RESET_STATE");
-
-    localStorage.removeItem("token");
     commit("SET_AUTH", false);
   },
 

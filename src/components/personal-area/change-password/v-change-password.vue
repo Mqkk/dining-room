@@ -50,6 +50,7 @@
       </form>
     </div>
   </div>
+  <notifications />
 </template>
 
 <script>
@@ -121,7 +122,10 @@ export default {
       } else {
         try {
           await this.POST_DATA_FOR_CHANGE_PASSWORD(this.formData); // вызываем действие для отправки формы
-
+          this.$notify({
+            title: "Пароль успешно изменен",
+            type: "success",
+          });
           // Переход на страницу успешного восстановления пароля
           this.$router.push("/settings");
         } catch (error) {

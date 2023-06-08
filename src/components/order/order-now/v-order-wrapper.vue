@@ -52,21 +52,52 @@ export default {
     async deleteOrderFromApi(event) {
       event.preventDefault();
 
-      this.CLEAR_ORDER();
-      this.DELETE_ORDER_FROM_API();
-      window.location.reload();
+      try {
+        await this.checkServerStatus();
+
+        this.CLEAR_ORDER();
+        this.DELETE_ORDER_FROM_API();
+        window.location.reload();
+      } catch {
+        this.$notify({
+          title: "Произошла ошибка сервера",
+          text: "Попробуйте удалить заказ немного позже",
+          type: "error",
+        });
+      }
     },
 
     async updateOrderFromApi(event) {
       event.preventDefault();
 
-      const orderData = {
-        cart: this.ORDER_TO_SERVER,
-        menu_id: this.MENU_ID,
-        total: this.ORDER_TOTAL_COST,
-      };
+      try {
+        await this.checkServerStatus();
 
-      this.SEND_CART_TO_SERVER(orderData);
+        const orderData = {
+          cart: this.ORDER_TO_SERVER,
+          menu_id: this.MENU_ID,
+          total: this.ORDER_TOTAL_COST,
+        };
+        this.SEND_CART_TO_SERVER(orderData);
+
+        this.$notify({
+          title: "Заказ успешно обновлен",
+          type: "success",
+        });
+      } catch {
+        this.$notify({
+          title: "Произошла ошибка сервера",
+          text: "Попробуйте обновить заказ немного позже",
+          type: "error",
+        });
+      }
+    },
+
+    async checkServerStatus() {
+      const response = await fetch("");
+      if (!response.ok) {
+        throw new Error("SE");
+      }
     },
   },
   computed: {

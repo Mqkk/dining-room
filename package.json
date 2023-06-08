@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-barcode": "^2.0.1",
+    "@kyvg/vue3-notification": "^2.9.1",
     "@vue/compiler-sfc": "^3.3.4",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",

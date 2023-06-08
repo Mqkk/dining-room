@@ -6,9 +6,10 @@ import "material-design-icons-iconfont";
 import VueTheMask from "vue-the-mask";
 import VueBarcode from "@chenfengyuan/vue-barcode";
 import VueCookies from "vue-cookies";
+import Notifications from "@kyvg/vue3-notification";
 
 const app = createApp(App);
-app.use(VueTheMask).use(VueCookies).use(store).use(router);
+app.use(VueTheMask).use(Notifications).use(VueCookies).use(store).use(router);
 app.component(VueBarcode.name, VueBarcode);
 
 const isAuthenticated = store.state.isAuthenticated;

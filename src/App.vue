@@ -4,6 +4,7 @@
     <v-main-wrapper />
     <v-toolbar v-if="this.IS_AUTHENTICATED === true" />
   </div>
+  <notifications width="100%" />
 </template>
 
 <script>
