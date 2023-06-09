@@ -140,9 +140,10 @@ export default {
   }
 
   &__name {
+    margin-bottom: 2px;
     font-weight: 500;
     font-size: 14px;
-    line-height: 145%;
+    line-height: 130%;
     color: $dark-color;
   }
 

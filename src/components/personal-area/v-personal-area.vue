@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import code from "@/assets/images/code.png";
 import arrowRight from "@/assets/images/icons/icon-arrow-right.svg";
 import { mapActions, mapGetters } from "vuex";
 
@@ -48,7 +47,6 @@ export default {
   name: "v-personal-area",
   data() {
     return {
-      code,
       arrowRight,
     };
   },

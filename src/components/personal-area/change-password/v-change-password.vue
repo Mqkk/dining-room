@@ -7,13 +7,24 @@
       <form class="form change-password__form">
         <div class="form__item form__item--left">
           <label class="form__label">
-            <input
-              type="password"
-              class="input-reset input form__input"
-              id="password"
-              v-model="formData.password"
-              placeholder="Введите старый пароль"
-            />
+            <div class="input-password">
+              <input
+                :type="showPassword ? 'text' : 'password'"
+                class="input-reset input form__input"
+                id="password"
+                v-model="formData.password"
+                placeholder="Введите старый пароль"
+              />
+              <span
+                class="toggle-password"
+                :class="{ 'show-password': showPassword }"
+                @click="showPassword = !showPassword"
+              >
+                <i class="material-icons">
+                  {{ showPassword ? "visibility_off" : "visibility" }}
+                </i>
+              </span>
+            </div>
           </label>
           <span class="error-message" v-if="errors.password">
             {{ errors.password }}
@@ -21,13 +32,15 @@
         </div>
         <div class="form__item form__item--left">
           <label class="form__label">
-            <input
-              type="password"
-              class="input-reset input form__input"
-              id="password_new"
-              v-model="formData.password_new"
-              placeholder="Введите новый пароль"
-            />
+            <div class="input-password">
+              <input
+                :type="showPassword ? 'text' : 'password'"
+                class="input-reset input form__input"
+                id="password_new"
+                v-model="formData.password_new"
+                placeholder="Введите новый пароль"
+              />
+            </div>
           </label>
           <span class="error-message" v-if="errors.password_new">
             {{ errors.password_new }}
@@ -36,7 +49,7 @@
         <div class="form__item form__item--left">
           <label class="form__label">
             <input
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               class="input-reset input form__input"
               id="confrirm_password"
               v-model="formData.confirmNewPassword"
@@ -78,6 +91,7 @@ export default {
         password_new: "",
         confirmNewPassword: "",
       },
+      showPassword: false,
     };
   },
   methods: {
