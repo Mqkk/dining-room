@@ -9,6 +9,7 @@
           <input
             type="tel"
             class="input-reset input form__input"
+            id="phone"
             v-model="recoveryPasswordData.phone"
             v-mask="'+7 (###) ###-##-##'"
             placeholder="Введите номер телефона"

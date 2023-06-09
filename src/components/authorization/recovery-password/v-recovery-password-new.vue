@@ -9,6 +9,7 @@
           <input
             type="password"
             class="input-reset input form__input"
+            id="password"
             v-model="recoveryPasswordData.password"
             placeholder="Введите новый пароль"
           />
@@ -22,6 +23,7 @@
           <input
             type="password"
             class="input-reset input form__input"
+            id="confirm_password"
             v-model="recoveryPasswordData.confirmPassword"
             placeholder="Подтвердите новый пароль"
           />

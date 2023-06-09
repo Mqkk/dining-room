@@ -7,6 +7,7 @@
           <input
             class="input-reset input"
             type="text"
+            id="confirm_code"
             v-model="confirmCode.code"
             v-mask="'####'"
             placeholder="Введите код подтверждения"

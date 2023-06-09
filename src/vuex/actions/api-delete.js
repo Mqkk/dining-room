@@ -15,10 +15,17 @@ export default {
         }
       );
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      if (error.response) {
+        return Promise.reject("Ошибка сервера");
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 };

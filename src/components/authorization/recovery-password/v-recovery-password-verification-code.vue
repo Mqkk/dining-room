@@ -9,6 +9,7 @@
           <input
             type="text"
             class="input-reset input form__input"
+            id="code"
             v-model="recoveryPasswordData.code"
             v-mask="'####'"
             placeholder="Введите код подтверждения"

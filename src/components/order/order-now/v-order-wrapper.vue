@@ -58,9 +58,13 @@ export default {
       try {
         this.CLEAR_ORDER();
         this.DELETE_ORDER_FROM_API();
-      } catch {
         this.$notify({
-          title: "Произошла ошибка сервера",
+          title: "Заказ успешно отменен",
+          type: "success",
+        });
+      } catch (error) {
+        this.$notify({
+          title: error,
           text: "Попробуйте удалить заказ немного позже",
           type: "error",
         });
@@ -77,7 +81,6 @@ export default {
           total: this.ORDER_TOTAL_COST,
         };
         this.SEND_CART_TO_SERVER(orderData);
-
         this.$notify({
           title: "Заказ успешно обновлен",
           type: "success",

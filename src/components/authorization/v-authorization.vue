@@ -13,6 +13,7 @@
             id="phone"
             v-model="formData.phone"
             placeholder="Введите номер телефона"
+            autocomplete="tel"
             v-mask="'+7 (###) ###-##-##'"
           />
           <span class="error-message" v-if="errors.phone">
@@ -27,6 +28,7 @@
                 id="password"
                 :type="showPassword ? 'text' : 'password'"
                 v-model="formData.password"
+                autocomplete="password"
                 placeholder="Введите Пароль"
               />
               <span
