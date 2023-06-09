@@ -28,7 +28,7 @@ const store = createStore({
     ordersHistory: [],
     orderHistoryItem: [],
     changePasswordData: {},
-    isAuthenticated: false,
+    isAuthenticated: true,
     recoveryPasswordData: {}, // строка для номера телефона при восстановлении пароля
     profileData: {},
     menuId: "",

@@ -30,9 +30,15 @@
               <img :src="arrowRight" alt="" />
             </div>
           </router-link>
-          <li class="personal-nav__item" @click="logout">
+          <li class="personal-nav__item" @click="isPopupOpen = true">
             <span class="personal-nav__name">Выйти</span>
           </li>
+
+          <v-popup
+            :is-open="isPopupOpen"
+            @logout="logout"
+            @close="isPopupOpen = false"
+          />
         </ul>
       </div>
     </div>
@@ -42,21 +48,29 @@
 <script>
 import arrowRight from "@/assets/images/icons/icon-arrow-right.svg";
 import { mapActions, mapGetters } from "vuex";
+import vPopup from "@/components/v-popup.vue";
 
 export default {
   name: "v-personal-area",
   data() {
     return {
       arrowRight,
+      isPopupOpen: false,
     };
   },
-  components: {},
+  components: {
+    vPopup,
+  },
+  props: {},
   methods: {
     ...mapActions(["LOGOUT", "GET_PROFILE_FROM_API"]),
     logout() {
       this.LOGOUT("logout");
 
-      this.$router.push("/authorization");
+      setTimeout(() => {
+        this.isPopupOpen = false;
+        this.$router.push("/authorization");
+      }, 2000);
     },
   },
   computed: {

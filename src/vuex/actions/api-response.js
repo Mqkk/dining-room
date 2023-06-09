@@ -4,14 +4,11 @@ export default {
   // регистрация
   async POST_DATA_FOR_REGISTRATION({ commit }, formData) {
     try {
-      await axios.post("http://v-brn-stoltest:8000/api/register/", formData, {
+      await axios.post("", formData, {
         headers: {},
         withCredentials: true,
       });
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/token/obtain/",
-        formData
-      );
+      const response = await axios.post("", formData);
       const token = response.data.access;
       this.GET_TOKEN = token;
 
@@ -42,15 +39,11 @@ export default {
   async POST_DATA_FOR_CONFIRM_REGISTRATION({ commit }, confirmCode) {
     try {
       const token = this.state.token;
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/confirmation/",
-        confirmCode,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post("", confirmCode, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       commit("UPDATE_CONFIRM_CODE_FOR_REGISTRATION", confirmCode);
       this.state.registrationData = {};
       localStorage.removeItem("vuex");
@@ -77,13 +70,10 @@ export default {
   // авторизация
   async POST_DATA_FOR_AUTHORIZATION({ commit }, loginData) {
     try {
-      await axios.post("http://v-brn-stoltest:8000/api/login/", loginData, {
+      await axios.post("", loginData, {
         headers: {},
       });
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/token/obtain/",
-        loginData
-      );
+      const response = await axios.post("", loginData);
       const token = response.data.access;
       this.GET_TOKEN = token;
 
@@ -117,13 +107,9 @@ export default {
   // восстановление пароля (отправка номера телефона)
   async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/password/recovery/",
-        recoveryPasswordData,
-        {
-          headers: {},
-        }
-      );
+      const response = await axios.post("", recoveryPasswordData, {
+        headers: {},
+      });
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
       return response;
@@ -148,13 +134,9 @@ export default {
   // восстановление пароля (отправка кода подтверждения)
   async POST_СODE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/password/recovery/code/",
-        recoveryPasswordData,
-        {
-          headers: {},
-        }
-      );
+      const response = await axios.post("", recoveryPasswordData, {
+        headers: {},
+      });
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
       return response;
@@ -179,13 +161,9 @@ export default {
   // восстановление пароля (отправка нового пароля)
   async POST_PASSWORD_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/password/set/",
-        recoveryPasswordData,
-        {
-          headers: {},
-        }
-      );
+      const response = await axios.post("", recoveryPasswordData, {
+        headers: {},
+      });
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
       return response;
@@ -205,13 +183,9 @@ export default {
   // повторная отправка кода подтверждения
   async SEND_CODE_FOR_RECONFIRMATION({ commit }, confirmCode) {
     try {
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/reconfirmation/",
-        confirmCode,
-        {
-          headers: {},
-        }
-      );
+      const response = await axios.post("", confirmCode, {
+        headers: {},
+      });
       commit("UPDATE_CODE_FOR_RECONFIRMATION", confirmCode);
 
       return response;
@@ -237,15 +211,11 @@ export default {
   async POST_DATA_FOR_CHANGE_PASSWORD({ commit }, changePasswordData) {
     try {
       const token = this.state.token;
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/password/",
-        changePasswordData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post("", changePasswordData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       commit("UPDATE_DATA_FOR_CHANGE_PASSWORD", changePasswordData);
 
       return response;
@@ -271,15 +241,11 @@ export default {
   async SEND_CART_TO_SERVER({ commit }, cartData) {
     try {
       const token = this.state.token;
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/order/",
-        cartData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post("", cartData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const orderId = response.data.order_id;
       commit("UPDATE_ORDER_ID", orderId);
       commit("UPDATE_CART_TO_SERVER", cartData);

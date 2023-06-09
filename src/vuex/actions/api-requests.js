@@ -6,7 +6,7 @@ export default {
   async GET_PRODUCTS_FROM_API({ commit }) {
     try {
       const token = this.state.token;
-      const products = await axios("http://v-brn-stoltest:8000/api/menu/", {
+      const products = await axios("http://localhost:3000/items", {
         methods: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -30,7 +30,7 @@ export default {
   async GET_ORDER_FROM_API({ commit }) {
     try {
       const token = this.state.token;
-      const order = await axios("http://v-brn-stoltest:8000/api/order/", {
+      const order = await axios("http://localhost:3000/items", {
         methods: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,15 +63,12 @@ export default {
   async GET_ORDERS_HISTORY_FROM_API({ commit }) {
     try {
       const token = this.state.token;
-      const ordersHistory = await axios(
-        "http://v-brn-stoltest:8000/api/orders/",
-        {
-          methods: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const ordersHistory = await axios("http://localhost:3000/items", {
+        methods: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       commit("SET_ORDERS_HISTORY_TO_STATE", ordersHistory.data);
 
@@ -87,7 +84,7 @@ export default {
     try {
       const token = this.state.token;
       const orderHistoryItem = await axios(
-        `http://v-brn-stoltest:8000/api/order/${id}`,
+        `http://localhost:3000/items/${id}`,
         {
           methods: "GET",
           headers: {
@@ -108,15 +105,12 @@ export default {
   async GET_PROFILE_FROM_API({ commit }) {
     try {
       const token = this.state.token;
-      const profileData = await axios(
-        "http://v-brn-stoltest:8000/api/profile/",
-        {
-          methods: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const profileData = await axios("http://localhost:3000/items", {
+        methods: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       commit("SET_PROFILE_TO_STATE", profileData.data);
 
