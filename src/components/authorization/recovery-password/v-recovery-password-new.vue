@@ -5,15 +5,26 @@
     </div>
     <form class="form recover-password__form content">
       <div class="form__item form__item--left">
-        <label class="form__label">
-          <input
-            type="password"
-            class="input-reset input form__input"
-            id="password"
-            v-model="recoveryPasswordData.password"
-            placeholder="Введите новый пароль"
-          />
-        </label>
+        <div class="input-password">
+          <label class="form__label">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              class="input-reset input form__input"
+              id="password"
+              v-model="recoveryPasswordData.password"
+              placeholder="Введите новый пароль"
+            />
+          </label>
+          <span
+            class="toggle-password"
+            :class="{ 'show-password': showPassword }"
+            @click="showPassword = !showPassword"
+          >
+            <i class="material-icons">
+              {{ showPassword ? "visibility_off" : "visibility" }}
+            </i>
+          </span>
+        </div>
         <span class="error-message" v-if="errors.password">{{
           errors.password
         }}</span>
@@ -21,7 +32,7 @@
       <div class="form__item form__item--left">
         <label class="form__label">
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             class="input-reset input form__input"
             id="confirm_password"
             v-model="recoveryPasswordData.confirmPassword"
@@ -60,6 +71,7 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      showPassword: false,
     };
   },
   methods: {

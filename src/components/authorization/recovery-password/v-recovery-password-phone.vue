@@ -13,6 +13,7 @@
             v-model="recoveryPasswordData.phone"
             v-mask="'+7 (###) ###-##-##'"
             placeholder="Введите номер телефона"
+            autocomplete="tel"
           />
         </label>
         <span class="error-message" v-if="errors.phone">{{

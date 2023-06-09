@@ -10,6 +10,7 @@
             id="last_name"
             v-model="formData.last_name"
             placeholder="Введите Фамилию"
+            autocomplete="family-name"
           />
           <span class="error-message" v-if="errors.lastName">{{
             errors.lastName
@@ -23,6 +24,7 @@
             id="name"
             v-model="formData.name"
             placeholder="Введите Имя"
+            autocomplete="name"
           />
           <span class="error-message" v-if="errors.name">{{
             errors.name
@@ -36,6 +38,7 @@
             id="surname"
             v-model="formData.surname"
             placeholder="Введите Отчество"
+            autocomplete="given-name"
           />
           <span class="error-message" v-if="errors.surname">{{
             errors.surname
@@ -49,6 +52,7 @@
             id="phone"
             v-model="formData.phone"
             placeholder="Введите номер телефона"
+            autocomplete="tel"
             v-mask="'+7 (###) ###-##-##'"
           />
           <span class="error-message" v-if="errors.phone">{{
