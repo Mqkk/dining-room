@@ -129,7 +129,16 @@ export default {
           // Переход на страницу успешного восстановления пароля
           this.$router.push("/settings");
         } catch (error) {
-          this.errors.password = error;
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.errors.password = error;
+            }
+          } else {
+            this.$notify({
+              title: error,
+              type: "error",
+            });
+          }
         }
       }
     },

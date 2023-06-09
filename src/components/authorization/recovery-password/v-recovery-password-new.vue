@@ -73,7 +73,7 @@ export default {
       // Валидация Пароля
       if (!this.recoveryPasswordData.password) {
         this.errors.password = "Поле Пароль обязательно для заполнения";
-      } else if (this.recoveryPasswordData.password.length < 7) {
+      } else if (this.recoveryPasswordData.password.length < 8) {
         this.errors.password = "Пароль должен сожержать минимум 8 символов";
       }
 
@@ -94,12 +94,26 @@ export default {
       );
       if (hasErrors) {
         return;
+      } else {
+        try {
+          await this.POST_PASSWORD_FOR_RECOVERY_PASSWORD(
+            this.recoveryPasswordData
+          );
+
+          // Переход на страницу успешного восстановления пароля
+          this.$router.push("/authorization");
+
+          this.$notify({
+            title: "Пароль успешно восстановлен",
+            type: "success",
+          });
+        } catch (error) {
+          this.$notify({
+            title: error,
+            type: "error",
+          });
+        }
       }
-
-      await this.POST_PASSWORD_FOR_RECOVERY_PASSWORD(this.recoveryPasswordData);
-
-      // Переход на страницу успешного восстановления пароля
-      this.$router.push("/authorization");
     },
   },
 };

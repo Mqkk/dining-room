@@ -42,6 +42,9 @@ export default {
     vTitleSubtitle,
     vOrderMain,
   },
+  computed: {
+    ...mapGetters(["ORDER", "ORDER_TOTAL_COST", "ORDER_TO_SERVER", "MENU_ID"]),
+  },
   methods: {
     ...mapActions([
       "DELETE_ORDER_FROM_API",
@@ -53,11 +56,8 @@ export default {
       event.preventDefault();
 
       try {
-        await this.checkServerStatus();
-
         this.CLEAR_ORDER();
         this.DELETE_ORDER_FROM_API();
-        window.location.reload();
       } catch {
         this.$notify({
           title: "Произошла ошибка сервера",
@@ -71,8 +71,6 @@ export default {
       event.preventDefault();
 
       try {
-        await this.checkServerStatus();
-
         const orderData = {
           cart: this.ORDER_TO_SERVER,
           menu_id: this.MENU_ID,
@@ -84,26 +82,14 @@ export default {
           title: "Заказ успешно обновлен",
           type: "success",
         });
-      } catch {
+      } catch (error) {
         this.$notify({
-          title: "Произошла ошибка сервера",
+          title: error,
           text: "Попробуйте обновить заказ немного позже",
           type: "error",
         });
       }
     },
-
-    async checkServerStatus() {
-      const response = await fetch(
-        "http://v-brn-stoltest:8000/api/check_server_status/"
-      );
-      if (!response.ok) {
-        throw new Error("SE");
-      }
-    },
-  },
-  computed: {
-    ...mapGetters(["ORDER", "ORDER_TOTAL_COST", "ORDER_TO_SERVER", "MENU_ID"]),
   },
 };
 </script>

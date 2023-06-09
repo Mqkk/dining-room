@@ -82,7 +82,16 @@ export default {
           // переход к следующему этапу
           this.$router.push("/new-password");
         } catch (error) {
-          this.errors.code = error;
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.errors.code = "Неверный код подтверждения";
+            }
+          } else {
+            this.$notify({
+              title: error,
+              type: "error",
+            });
+          }
         }
       }
     },

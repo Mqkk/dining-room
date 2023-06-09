@@ -115,14 +115,19 @@ export default {
         } catch (error) {
           if (error.response) {
             if (error.response.status === 401) {
-              this.errors.password = "Невеный пароль или логин";
-              this.errors.phone = "Невеный пароль или логин";
+              this.$notify({
+                title: "Неверный пароль или логин",
+                type: "error",
+              });
             }
             if (error.response.status === 400) {
               this.errors.password = "Превышено допустимое значение";
             }
           } else {
-            this.errors.phone = error;
+            this.$notify({
+              title: error,
+              type: "error",
+            });
           }
         }
       }

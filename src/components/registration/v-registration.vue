@@ -164,7 +164,7 @@ export default {
       // Валидация Пароля
       if (!this.formData.password) {
         this.errors.password = "Поле Пароль обязательно для заполнения";
-      } else if (this.formData.password.length < 7) {
+      } else if (this.formData.password.length < 8) {
         this.errors.password = "Пароль должен сожержать минимум 8 символов";
       }
 
@@ -193,12 +193,10 @@ export default {
               this.errors.phone = "Номер уже существует";
             }
           } else {
-            this.errors.lastName = error;
-            this.errors.name = error;
-            this.errors.surname = error;
-            this.errors.phone = error;
-            this.errors.password = error;
-            this.errors.password2 = error;
+            this.$notify({
+              title: error,
+              type: "error",
+            });
           }
         }
       }

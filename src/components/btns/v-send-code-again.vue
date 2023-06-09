@@ -50,7 +50,19 @@ export default {
         try {
           await this.SEND_CODE_FOR_RECONFIRMATION(this.sendPhone);
         } catch (error) {
-          // Обработка ошибки повторной отправки кода
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.$notify({
+                title: "Вы пока не можете запросить код повторно",
+                type: "error",
+              });
+            }
+          } else {
+            this.$notify({
+              title: error,
+              type: "error",
+            });
+          }
         }
       }
     },

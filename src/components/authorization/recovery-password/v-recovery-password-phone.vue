@@ -78,7 +78,16 @@ export default {
           // переход к следущему этапу
           this.$router.push("/verification-code");
         } catch (error) {
-          this.errors.phone = error;
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.errors.phone = "Данного номера телефона нет в базе";
+            }
+          } else {
+            this.$notify({
+              title: error,
+              type: "error",
+            });
+          }
         }
       }
     },

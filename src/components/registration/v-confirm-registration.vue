@@ -83,7 +83,16 @@ export default {
 
           this.$router.push("/registration/completion");
         } catch (error) {
-          this.errors.code = error;
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.errors.code = "Неверный код подтверждения";
+            }
+          } else {
+            this.$notify({
+              title: error,
+              type: "error",
+            });
+          }
         }
       }
     },

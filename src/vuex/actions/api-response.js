@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export default {
+  // регистрация
   async POST_DATA_FOR_REGISTRATION({ commit }, formData) {
     try {
       await axios.post("http://v-brn-stoltest:8000/api/register/", formData, {
@@ -21,7 +22,7 @@ export default {
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400) {
-          // Обработка ошибки авторизации
+          // Обработка ошибки 400
           return Promise.reject(error);
         } else {
           // Обработка других ошибок сервера
@@ -37,6 +38,7 @@ export default {
     }
   },
 
+  // подтверждение регистрации
   async POST_DATA_FOR_CONFIRM_REGISTRATION({ commit }, confirmCode) {
     try {
       const token = this.state.token;
@@ -55,10 +57,24 @@ export default {
 
       return response;
     } catch (error) {
-      return Promise.reject("Неправильный код подтверждения");
+      if (error.response) {
+        if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 
+  // авторизация
   async POST_DATA_FOR_AUTHORIZATION({ commit }, loginData) {
     try {
       await axios.post("http://v-brn-stoltest:8000/api/login/", loginData, {
@@ -98,48 +114,6 @@ export default {
     }
   },
 
-  // изменение пароля
-  async POST_DATA_FOR_CHANGE_PASSWORD({ commit }, changePasswordData) {
-    try {
-      const token = this.state.token;
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/password/",
-        changePasswordData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      commit("UPDATE_DATA_FOR_CHANGE_PASSWORD", changePasswordData);
-
-      return response;
-    } catch (error) {
-      return Promise.reject("Неправильный старый пароль");
-    }
-  },
-
-  async SEND_CART_TO_SERVER({ commit }, cartData) {
-    try {
-      const token = this.state.token;
-      const response = await axios.post(
-        "http://v-brn-stoltest:8000/api/order/",
-        cartData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const orderId = response.data.order_id;
-      commit("UPDATE_ORDER_ID", orderId);
-      commit("UPDATE_CART_TO_SERVER", cartData);
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  },
-
   // восстановление пароля (отправка номера телефона)
   async POST_PHONE_FOR_RECOVERY_PASSWORD({ commit }, recoveryPasswordData) {
     try {
@@ -154,7 +128,20 @@ export default {
 
       return response;
     } catch (error) {
-      return Promise.reject("Номера телефона нет в нашей базе");
+      if (error.response) {
+        if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 
@@ -172,7 +159,20 @@ export default {
 
       return response;
     } catch (error) {
-      return Promise.reject("Неправильный код подтверждения");
+      if (error.response) {
+        if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 
@@ -188,13 +188,21 @@ export default {
       );
       commit("UPDATE_DATA_FOR_RECOVERY_PASSWORD", recoveryPasswordData);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      if (error.response) {
+        return Promise.reject("Ошибка сервера");
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 
+  // повторная отправка кода подтверждения
   async SEND_CODE_FOR_RECONFIRMATION({ commit }, confirmCode) {
     try {
       const response = await axios.post(
@@ -206,10 +214,87 @@ export default {
       );
       commit("UPDATE_CODE_FOR_RECONFIRMATION", confirmCode);
 
-      console.log(response);
+      return response;
     } catch (error) {
-      console.log(error);
-      return error;
+      if (error.response) {
+        if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
+    }
+  },
+
+  // изменение пароля
+  async POST_DATA_FOR_CHANGE_PASSWORD({ commit }, changePasswordData) {
+    try {
+      const token = this.state.token;
+      const response = await axios.post(
+        "http://v-brn-stoltest:8000/api/password/",
+        changePasswordData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      commit("UPDATE_DATA_FOR_CHANGE_PASSWORD", changePasswordData);
+
+      return response;
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          return Promise.reject(error);
+        } else {
+          // Обработка других ошибок сервера
+          return Promise.reject("Ошибка сервера");
+        }
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
+    }
+  },
+
+  // отправка товара из корзины серверу (и из заказа при изменении)
+  async SEND_CART_TO_SERVER({ commit }, cartData) {
+    try {
+      const token = this.state.token;
+      const response = await axios.post(
+        "http://v-brn-stoltest:8000/api/order/",
+        cartData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const orderId = response.data.order_id;
+      commit("UPDATE_ORDER_ID", orderId);
+      commit("UPDATE_CART_TO_SERVER", cartData);
+
+      return response;
+    } catch (error) {
+      if (error.response) {
+        return Promise.reject("Ошибка сервера");
+      } else if (error.request) {
+        // Ошибка запроса (например, нет подключения к интернету)
+        return Promise.reject("Ошибка сервера");
+      } else {
+        // Прочие ошибки
+        return Promise.reject("Неизвестная ошибка");
+      }
     }
   },
 };
